@@ -53,6 +53,7 @@ function Login() {
         axiosPublic.post("/create-user" ,user)
         .then(res=> console.log(res.data))
         Swal.fire({
+          confirmButtonColor:"#5e503f",
           icon: "success",
           title: "successfully Logged In",
         });
@@ -61,6 +62,7 @@ function Login() {
       .catch((error) => {
         Swal.fire({
           icon: "error",
+          confirmButtonColor:"#5e503f",
           title: error.message,
         });
         toast.remove(toastId);

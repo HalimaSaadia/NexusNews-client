@@ -3,6 +3,7 @@ import Root from "../layout/Root";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import AddArticle from "../pages/AddArticle/AddArticle";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         {
             path: "/login",
             element: <Login />
+        },
+        {
+          path: "/addArticle",
+          element:<AddArticle />
         }
     ]
   },

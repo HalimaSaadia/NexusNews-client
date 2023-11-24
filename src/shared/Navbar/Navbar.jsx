@@ -60,7 +60,7 @@ export default function Navbar() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar color="primary" component="nav">
+      <AppBar color="primary" position="sticky" sx={{top:0}}  component="nav">
 
         <Toolbar>
           <IconButton
