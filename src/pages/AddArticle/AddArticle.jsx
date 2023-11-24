@@ -8,6 +8,9 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import "./addArcticle.css";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
+import usePublisher from "../../Hooks/usePublisher";
 
 const selectStyle = {
   control: (base, state) => ({
@@ -23,13 +26,20 @@ const selectStyle = {
 
 export default function AddArticle() {
   const axiosPublic = useAxiosPublic();
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const publishers = usePublisher()
+
+  const {user} = useContext(AuthContext)
+  const tagsOption = [
+    { value: "politics", label: "Politics" },
+    { value: "business", label: "business" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "sports", label: "Sports" },
   ];
-
-
+  const publisherOption = publishers?.map(publisher => {
+    const option = {value:publisher?.publisherName,label:publisher?.publisherName}
+    return option
+})
+console.log(publisherOption);
   const {
     register,
     handleSubmit,
@@ -39,12 +49,34 @@ export default function AddArticle() {
 
   const onSubmit = (data) => {
     console.log(data);
-    axiosPublic.post()
+    axiosPublic
+      .post(
+        `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_api_key
+        }`,
+        { image: data.image[0] },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res.data.data.display_url);
+        const article = {
+            user:user?.displayName,
+            userImage:user?.photoURL,
+            title:data.title,
+            image:res?.data?.data?.display_url,
+            publisher:data?.publisher.value,
+            tag:data?.tags.value,
+            description:data?.description,
+            isPremium: false,
+            state:'pending',
+        }
+        console.log(article);
+      });
   };
-
-
-
-
 
   return (
     <Box
@@ -59,7 +91,7 @@ export default function AddArticle() {
         <CardContent>
           <CardMedia
             component="img"
-            image="/static/images/cards/contemplative-reptile.jpg"
+            image="https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4="
             alt="green iguana"
           />
           <CardContent>
@@ -93,11 +125,7 @@ export default function AddArticle() {
                 {errors.image?.type === "required" && (
                   <Typography color="red">Image is require</Typography>
                 )}
-                <TextField
-                  label="Standard"
-                  variant="standard"
-                  sx={{ width: "48%" }}
-                />
+               
                 <Controller
                   control={control}
                   name="tags"
@@ -106,8 +134,9 @@ export default function AddArticle() {
                     <Select
                       {...field}
                       className="tags"
+                      placeholder="select tag"
                       styles={selectStyle}
-                      options={options}
+                      options={tagsOption}
                     />
                   )}
                 />
@@ -115,13 +144,15 @@ export default function AddArticle() {
                 <Controller
                   name="publisher"
                   control={control}
+                 
                   rules={{ required: true }}
                   render={({ field }) => (
                     <Select
                       {...field}
+                      placeholder="select publisher"
                       className="tags"
                       styles={selectStyle}
-                      options={options}
+                      options={publisherOption}
                     />
                   )}
                 />
