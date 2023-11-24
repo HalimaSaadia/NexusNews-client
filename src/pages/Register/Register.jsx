@@ -45,7 +45,10 @@ function Register() {
       const profileImage = result?.data?.data?.display_url
       const user = {userName:data?.name,
         userEmail:data?.email,
-        userImage:profileImage}
+        userImage:profileImage,
+        role:"user",
+        isPremiumTaken: false
+      }
 
       createUser(data.email, data.password)
         .then((res) => {

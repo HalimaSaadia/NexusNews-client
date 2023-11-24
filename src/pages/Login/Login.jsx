@@ -6,9 +6,11 @@ import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { FcGoogle } from "react-icons/fc";
-import { Button, Card, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardMedia, ListItem, TextField, Typography } from "@mui/material";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 function Login() {
+  const axiosPublic = useAxiosPublic()
   const {
     register,
     handleSubmit,
@@ -20,6 +22,7 @@ function Login() {
 
   const onSubmit = (data) => {
     const toastId = toast.loading("wait...");
+    console.log("submitted");
     loginWithEmailAndPassword(data.email, data.password)
       .then((res) => {
         Swal.fire({
@@ -41,6 +44,14 @@ function Login() {
     const toastId = toast.loading("wait...");
     loginWithGoogle()
       .then((res) => {
+        const user = {userName:res?.user?.displayName,
+          userEmail:res?.user?.email,
+          userImage:res?.user?.photoURL,
+          role:"user",
+          isPremiumTaken: false
+        }
+        axiosPublic.post("/create-user" ,user)
+        .then(res=> console.log(res.data))
         Swal.fire({
           icon: "success",
           title: "successfully Logged In",
@@ -56,62 +67,48 @@ function Login() {
       });
   };
   return (
-    <Card color="transparent" shadow={false} className="max-w-sm">
-      <Typography variant="h4" color="blue-gray">
-        Sign Up
-      </Typography>
-      <Typography color="gray" className="mt-1 font-normal">
-        Nice to meet you! Enter your details to register.
-      </Typography>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-      >
-        <div className="mb-1 flex flex-col gap-6">
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Your Email
-          </Typography>
-          <TextField
-            size="lg"
-            placeholder="name@mail.com"
-            {...register("email", { required: true })}
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-          <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Password
-          </Typography>
-          <TextField
-            type="password"
-            size="lg"
-            {...register("password", { required: true })}
-            placeholder="********"
-            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            labelProps={{
-              className: "before:content-none after:content-none",
-            }}
-          />
-        </div>
-
-        <Button type="submit" className="mt-6" fullWidth>
-          sign up
-        </Button>
-        <Typography color="gray" className="mt-4 text-center font-normal">
-          Don't have account?{" "}
-          <Link to="/register" className="font-medium text-gray-900">
-            Sign up
-          </Link>
-        </Typography>
-      </form>
-      <div className="flex items-center space-x-2  justify-center">
-        <p>continue With </p>
-        <button onClick={handleGoogleLogin}>
-          <FcGoogle className="text-3xl" />
-        </button>
-      </div>
-    </Card>
+    <Box sx={{minHeight: '100vh', display:'flex',alignItems:'center', justifyContent:'center'}}>
+    <Card  sx={{ maxWidth: "900px",display: {xs:'block', md:'flex'} }}>
+     <Box sx={{ display: "flex", flexDirection: "column" }}>
+    
+     <CardMedia
+       component="img"
+       sx={{height:"100%"}}
+       image="https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4="
+       alt="Live from space album cover"
+     />
+     </Box>
+     <Box>
+       <Typography variant="h4" textAlign="center">Sign In</Typography>
+       <form onSubmit={handleSubmit(onSubmit)}>
+         <Box sx={{ display: "flex", flexDirection: "column"}}>
+          
+           <TextField
+             {...register("email", { required: true })}
+             label="Enter Email"
+             type="email"
+             sx={{ m: 1, width: "300px" }}
+             variant="standard"
+           />
+           <TextField
+             {...register("password", { required: true })}
+             type="password"
+             label="Create Password"
+             sx={{ m: 1, width: "300px" }}
+             variant="standard"
+           />
+      
+           <Button variant="contained" color="secondary" type="submit">Sign In</Button>
+         </Box>
+       </form>
+       <Box>
+        <Typography>Don't have Account<Link style={{color:'blue'}} to="/register">Sign Up</Link></Typography>
+        <Typography>Continue With<Button onClick={handleGoogleLogin}><FcGoogle style={{fontSize:"30px"}}></FcGoogle></Button></Typography>
+        
+       </Box>
+     </Box>
+   </Card>
+  </Box>
   );
 }
 
