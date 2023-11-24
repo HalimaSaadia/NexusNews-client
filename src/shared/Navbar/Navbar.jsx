@@ -15,19 +15,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 
-// interface Props {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   window?: () => Window;
-// }
+
 
 const drawerWidth = 240;
 const navItems = ["home", "about", "contact"];
 
 export default function Navbar() {
-  //   const { window } = props;
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
