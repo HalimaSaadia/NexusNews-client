@@ -13,10 +13,12 @@ import IconButton from "@mui/material/IconButton";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 // import { AccountCircle } from "@mui/icons-material";
 
 function Register() {
   const { createUser, updateUserProfile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic()
   const theme = useTheme();
   const {
     register,
@@ -40,16 +42,23 @@ function Register() {
           },
         }
       );
+      const profileImage = result?.data?.data?.display_url
+      const user = {userName:data?.name,
+        userEmail:data?.email,
+        userImage:profileImage}
 
       createUser(data.email, data.password)
         .then((res) => {
-          updateUserProfile(data.name, result?.data?.data?.display_url).then(
+          axiosPublic.post("/create-user" ,user)
+          .then(res=> console.log(res.data))
+          updateUserProfile(data.name, profileImage).then(
             () => {}
           );
           Swal.fire({
             icon: "success",
             title: "User Created",
           });
+       
           toast.remove(toastId);
         })
         .catch((err) => {
