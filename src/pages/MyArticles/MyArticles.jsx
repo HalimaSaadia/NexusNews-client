@@ -11,8 +11,9 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { Button, Typography } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArticleRow from "./ArticleRow";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -22,7 +23,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-   
   },
 }));
 
@@ -30,15 +30,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  
+
   // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
-
-
-
 
 export default function MyArticles() {
   const axiosSecure = useAxiosSecure();
@@ -63,14 +60,6 @@ export default function MyArticles() {
   }
   console.log(articles);
 
-  // useEffect(()=> {
-  //   if(loading){
-  //       return
-  //   }
-  //   axiosSecure.get(`/my-articles/${user?.email}`)
-  //   .then(res=> console.log(res.data))
-  // },[loading])
-
   return (
     <TableContainer
       sx={{ maxWidth: "md", mx: "auto", mt: 5 }}
@@ -89,20 +78,8 @@ export default function MyArticles() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {articles?.map((row,idx) => (
-            
-            <StyledTableRow key={row._id}>
-                <StyledTableCell align="">{idx+1}</StyledTableCell>
-              <StyledTableCell  sx={{width:'40%',overflow:scrollY}} scope="row">
-                <Typography variant="h6"> {row.title}</Typography>
-              </StyledTableCell>
-              <StyledTableCell align="right">Details</StyledTableCell>
-              <StyledTableCell align="right">{row.state}{row.state === 'decline' && <Button>Admin FeedBack</Button>} </StyledTableCell>
-              <StyledTableCell align="right">{row.isPremium ? "Yes":"No"}</StyledTableCell>
-              <StyledTableCell align="right"><EditIcon sx={{color:"#c6ac8f",cursor:'pointer'}} /> </StyledTableCell>
-              <StyledTableCell align="right"><DeleteIcon sx={{color:'brown',cursor:'pointer'}}/></StyledTableCell>
-            
-            </StyledTableRow>
+          {articles?.map((row, idx) => (
+          <ArticleRow refetch={refetch} key={row._id} row={row} idx={idx} />
           ))}
         </TableBody>
       </Table>
