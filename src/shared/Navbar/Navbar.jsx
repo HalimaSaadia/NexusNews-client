@@ -14,15 +14,120 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
-
-
+import useUserState from "../../Hooks/useIsAdmin";
+import "./navbar.css";
 
 const drawerWidth = 240;
 const navItems = ["home", "about", "contact"];
 
 export default function Navbar() {
-
+  const { isAdmin, adminLoading, isPremiumTaken } = useUserState();
+  console.log(isAdmin, adminLoading);
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const DrawerNavList = (
+    <>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/">
+            <ListItemText primary="Home" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/addArticle">
+            <ListItemText primary="Add Article" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/articles">
+            <ListItemText primary="All Articles" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/subscription">
+            <ListItemText primary="Subscription" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+      {isAdmin === "admin" && (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/dashboard">
+              <ListItemText primary="Dashboard" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      )}
+      {isPremiumTaken === "admin" && (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/premium-articles">
+              <ListItemText primary="Premium Articles" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      )}
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/myArticles">
+            <ListItemText primary="My Articles" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/myProfile">
+            <ListItemText primary="Profile" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
+    </>
+  );
+
+  const NavList = (
+    <>
+      <NavLink to="/">
+        <Button sx={{ color: "white" }}>Home</Button>
+      </NavLink>
+
+      <NavLink to="/addArticle">
+        <Button sx={{ color: "white" }}>Add Article</Button>
+      </NavLink>
+
+      <NavLink to="/articles">
+        <Button sx={{ color: "white" }}>All Articles</Button>
+      </NavLink>
+
+      <NavLink to="/subscription">
+        <Button sx={{ color: "white" }}>Subscription</Button>
+      </NavLink>
+
+      {isAdmin === "admin" && (
+        <NavLink to="/dashboard">
+          <Button sx={{ color: "white" }}>Dashboard</Button>
+        </NavLink>
+      )}
+      {isPremiumTaken && (
+        <NavLink to="/premium-articles">
+          <Button sx={{ color: "white" }}>Premium Article</Button>
+        </NavLink>
+      )}
+
+      <NavLink to="/myArticles">
+        <Button sx={{ color: "white" }}>My Articles</Button>
+      </NavLink>
+
+      <NavLink to="/myProfile">
+        <Button sx={{ color: "white" }}>My Profile</Button>
+      </NavLink>
+    </>
+  );
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -34,18 +139,7 @@ export default function Navbar() {
         Nexus News
       </Typography>
       <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-              <ListItemButton sx={{ textAlign: "center" }}>
-                <NavLink>
-                <ListItemText  primary={item} />
-                </NavLink>
-              </ListItemButton>
-          
-          </ListItem>
-        ))}
-      </List>
+      <List>{DrawerNavList}</List>
     </Box>
   );
 
@@ -54,14 +148,13 @@ export default function Navbar() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar color="primary" position="sticky" sx={{top:0}}  component="nav">
-
+      <AppBar color="primary" position="sticky" sx={{ top: 0 }} component="nav">
         <Toolbar>
           <IconButton
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, color: "#0a0908", display: { sm: "none" } }}
+            sx={{ mr: 2, color: "#0a0908", display: { lg: "none" } }}
           >
             <MenuIcon sx={{ color: "white" }} />
           </IconButton>
@@ -69,16 +162,11 @@ export default function Navbar() {
             variant="h6"
             color="white"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", lg: "block" } }}
           >
             Nexus News
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <NavLink to={`${item}`} key={item}> <Button sx={{color:"white"}} >{item}</Button></NavLink>
-             
-            ))}
-          </Box>
+          <Box sx={{ display: { xs: "none", lg: "block" } }}>{NavList}</Box>
         </Toolbar>
       </AppBar>
       <nav>
@@ -91,7 +179,7 @@ export default function Navbar() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: "block", sm: "none" },
+            display: { sm: "block", lg: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,

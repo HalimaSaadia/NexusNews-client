@@ -40,19 +40,19 @@ const AuthProvider = ({children}) => {
         const unSubscribe = onAuthStateChanged(auth,(currentUser)=>{
             setUser(currentUser)
             setLoading(false)
-            // if(currentUser){
+            if(currentUser){
                
-            //     axiosSecure.post("/jwt", {email:currentUser.email})
-            //     .then(res => {
-            //         console.log(res.data.token);
-            //         if(res.data.token){
-            //             localStorage.setItem('token', res.data.token)
-            //         }
+                axiosSecure.post("/jwt", {email:currentUser.email})
+                .then(res => {
+                    console.log(res.data.token);
+                    if(res.data.token){
+                        localStorage.setItem('token', res.data.token)
+                    }
                    
-            //     })
-            // }else{
-            //     localStorage.removeItem('token')
-            // }
+                })
+            }else{
+                localStorage.removeItem('token')
+            }
         })
 
         return () => unSubscribe()
