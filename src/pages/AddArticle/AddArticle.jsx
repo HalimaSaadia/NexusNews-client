@@ -71,6 +71,7 @@ export default function AddArticle() {
       .then((res) => {
         const article = {
           author: user?.displayName,
+          authorEmail: user?.email,
           authorImage: user?.photoURL,
           title: data.title,
           image: res?.data?.data?.display_url,

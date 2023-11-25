@@ -59,7 +59,7 @@ const AuthProvider = ({children}) => {
     },[])
     console.log(user);
 
-    const value = {createUser,updateUserProfile,user, loginWithEmailAndPassword,loginWithGoogle}
+    const value = {createUser,updateUserProfile,user, loginWithEmailAndPassword,loginWithGoogle,loading}
     return (
         <AuthContext.Provider value={value}>
             {children}

@@ -6,6 +6,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import AddArticle from "../pages/AddArticle/AddArticle";
 import AllArticles from "../pages/AllArticles/AllArticles";
 import Details from "../pages/Details/Details";
+import MyArticles from "../pages/MyArticles/MyArticles";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
         {
           path: "/addArticle",
           element:<AddArticle />
+        },
+        {
+          path:"/myArticles",
+          element: <MyArticles />
         }
     ]
   },

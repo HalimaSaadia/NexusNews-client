@@ -66,7 +66,7 @@ export default function Details() {
   };
 
   return (
-    <Box sx={{ maxWidth: "md", mx: "auto" }}>
+    <Box sx={{ maxWidth: "md", mx: "auto",mt:10 }}>
       <Card>
         <CardHeader
           avatar={
