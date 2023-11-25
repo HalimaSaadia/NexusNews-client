@@ -25,7 +25,7 @@ const theme = createTheme({
       light: "#a9927d",
     },
     tertiary: {
-      main: "#a9927d",
+      main: "#c6ac8f",
     },
   },
 });

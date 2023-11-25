@@ -11,11 +11,12 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 
 export default function AllArticleCard({article}) {
-    const {author,authorImage,description,image,publisher,title} = article
+    const {author,authorImage,description,image,publisher,title,_id} = article
 
   return (
     <Card sx={{ maxWidth: {sm:'auto'}, display:'flex',flexDirection:'column' }}>
@@ -44,9 +45,11 @@ export default function AllArticleCard({article}) {
         {description?.slice(0,200)}... ...
         </Typography>
       </CardContent>
+      <Link to={`/details/${_id}`}>
       <CardActions disableSpacing>
-        <Button fullWidth variant="contained" color="secondary">Details</Button>
+       <Button fullWidth variant="contained" color="secondary">Details</Button>
       </CardActions>
+      </Link>
     </Card>
   );
 }

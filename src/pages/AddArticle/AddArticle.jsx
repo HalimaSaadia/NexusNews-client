@@ -78,7 +78,7 @@ export default function AddArticle() {
           tag: data?.tags.value,
           description: data?.description,
           isPremium: false,
-          state: "pending",
+          state: "approved",
           viewCount: 0,
         };
         axiosPublic

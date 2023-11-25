@@ -5,6 +5,7 @@ import Register from "../pages/Register/Register";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import AddArticle from "../pages/AddArticle/AddArticle";
 import AllArticles from "../pages/AllArticles/AllArticles";
+import Details from "../pages/Details/Details";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
           path:"/articles",
           element: <AllArticles />
 
+        },
+        {
+          path:"/details/:id",
+          element:<Details />
         },
         {
           path: "/addArticle",
