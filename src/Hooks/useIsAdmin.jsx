@@ -15,7 +15,7 @@ const useUserState = () => {
             return result?.data
         }
     })
-    return {isAdmin:data.role,adminLoading,isPremiumTaken:data.isPremiumTaken}
+    return {isAdmin:data?.role,adminLoading,isPremiumTaken:data?.isPremiumTaken}
 };
 
 export default useUserState;

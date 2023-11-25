@@ -8,12 +8,17 @@ import AllArticles from "../pages/AllArticles/AllArticles";
 import Details from "../pages/Details/Details";
 import MyArticles from "../pages/MyArticles/MyArticles";
 import EditArticle from "../pages/MyArticles/EditArticle";
+import Home from "../pages/Home/Home/Home";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     children: [
+      {
+        path:'/',
+        element: <Home />
+      },
         {
             path: "/register",
             element: <Register />
