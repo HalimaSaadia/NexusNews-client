@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import "./dashboardNavbar.css";
 
 export default function DashboardNavbar() {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -90,7 +90,7 @@ export default function DashboardNavbar() {
           <ListItemIcon>
             <AutoStoriesIcon />
           </ListItemIcon>
-          <Link>
+          <Link to="/dashboard/add-publisher">
             <ListItemText primary="Add publisher" />
           </Link>
         </ListItemButton>

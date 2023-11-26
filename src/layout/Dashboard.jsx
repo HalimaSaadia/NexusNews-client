@@ -18,7 +18,7 @@ const Dashboard = () => {
         <Outlet />
       </Box>
     </Box>
-  );
+  )
 };
 
 export default Dashboard;
