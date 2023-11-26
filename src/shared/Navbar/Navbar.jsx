@@ -16,12 +16,14 @@ import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import useUserState from "../../Hooks/useIsAdmin";
 import "./navbar.css";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const drawerWidth = 240;
 const navItems = ["home", "about", "contact"];
 
 export default function Navbar() {
   const { isAdmin, adminLoading, isPremiumTaken } = useUserState();
+  const { user } = React.useContext(AuthContext);
   console.log(isAdmin, adminLoading);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -80,13 +82,23 @@ export default function Navbar() {
           </NavLink>
         </ListItemButton>
       </ListItem>
-      <ListItem disablePadding>
-        <ListItemButton sx={{ textAlign: "center" }}>
-          <NavLink to="/myProfile">
-            <ListItemText primary="Profile" />
-          </NavLink>
-        </ListItemButton>
-      </ListItem>
+      {user ? (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/myProfile">
+              <ListItemText primary="Profile" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      ) : (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/login">
+              <ListItemText primary="Profile" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      )}
     </>
   );
 
@@ -123,9 +135,16 @@ export default function Navbar() {
         <Button sx={{ color: "white" }}>My Articles</Button>
       </NavLink>
 
-      <NavLink to="/myProfile">
-        <Button sx={{ color: "white" }}>My Profile</Button>
-      </NavLink>
+      {user ? (
+        <NavLink to="/myProfile">
+          <Button sx={{ color: "white" }}>My Profile</Button>
+        </NavLink>
+      ) : (
+        <NavLink to="/login">
+          {" "}
+          <Button sx={{ color: "white" }}>Login</Button>
+        </NavLink>
+      )}
     </>
   );
 
@@ -146,9 +165,13 @@ export default function Navbar() {
   //   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex",position:'sticky',top: 0 ,zIndex:50 }}>
+    <Box sx={{ display: "flex", position: "sticky", top: 0, zIndex: 50 }}>
       <CssBaseline />
-      <AppBar color="primary"  sx={{ position:'sticky',top: 0 }} component="nav">
+      <AppBar
+        color="primary"
+        sx={{ position: "sticky", top: 0 }}
+        component="nav"
+      >
         <Toolbar>
           <IconButton
             aria-label="open drawer"
