@@ -11,6 +11,7 @@ import EditArticle from "../pages/MyArticles/EditArticle";
 import Home from "../pages/Home/Home/Home";
 import Profile from "../pages/Profile/Profile";
 import Dashboard from "../layout/Dashboard";
+import AllUsers from "../pages/Dashboard/AllUsers/Allusers";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,13 @@ const router = createBrowserRouter([
   },
   {
     path:"dashboard",
-    element: <Dashboard />
+    element: <Dashboard />,
+    children:[
+      {
+        path:'dashboard/allUsers',
+        element:<AllUsers />
+      }
+    ]
   }
 ]);
 

@@ -8,7 +8,10 @@ const Dashboard = () => {
             <Box sx={{gridColumn: 'span 2', minHeight:'100vh', backgroundColor:'secondary.main'}}>
                 <DashboardNavbar />
             </Box>
+            <Box sx={{gridColumn:'span 10'}}>
             <Outlet />
+            </Box>
+     
         </Box>
     );
 };
