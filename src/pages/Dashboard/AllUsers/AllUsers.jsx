@@ -11,6 +11,8 @@ import { Avatar, Box, Button, Container } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,13 +48,33 @@ const rows = [
 
 export default function AllUsers() {
   const axiosSecure = useAxiosSecure();
-  const { isPending: allUsersLoading, data: allUsers } = useQuery({
+  const { isPending: allUsersLoading, data: allUsers,refetch } = useQuery({
     queryFn: async () => {
       const result = await axiosSecure.get("/all-users");
       return result.data;
     },
   });
-  console.log(allUsers);
+  
+  const handleMakeAdmin =(id,userName)=> {
+    const toastId = toast.loading("Updating...")
+    axiosSecure.patch(`/make-user-admin/${id}`)
+    .then(res => {
+        refetch()
+        Swal.fire({
+            icon:'success',
+            title:`${userName} is Admin Now`,
+            confirmButtonColor:"#5e503f",
+        })
+        toast.remove(toastId)
+    }).catch(error => {
+        Swal.fire({
+            icon:'error',
+            title: error.message,
+            confirmButtonColor:"#5e503f",
+        })
+        toast.remove(toastId)
+    })
+  }
   return (
     <Box
       sx={{
@@ -92,7 +114,7 @@ export default function AllUsers() {
                   {user?.role === "admin" ? (
                    <> Admin <AdminPanelSettingsIcon color="secondary"/></>
                   ) : (
-                    <Button color="secondary" disabled={user?.role === 'admin' ? true : false} variant="contained">
+                    <Button onClick={() => handleMakeAdmin(user?._id, user?.userName)} color="secondary" disabled={user?.role === 'admin' ? true : false} variant="contained">
                       Make Admin 
                     </Button>
                   )}
