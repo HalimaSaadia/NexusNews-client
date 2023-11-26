@@ -10,6 +10,7 @@ import MyArticles from "../pages/MyArticles/MyArticles";
 import EditArticle from "../pages/MyArticles/EditArticle";
 import Home from "../pages/Home/Home/Home";
 import Profile from "../pages/Profile/Profile";
+import Dashboard from "../layout/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -51,8 +52,8 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path:"/dashboard",
-    element: <Payment />
+    path:"dashboard",
+    element: <Dashboard />
   }
 ]);
 
