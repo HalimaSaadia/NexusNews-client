@@ -54,6 +54,8 @@ export default function AddArticle() {
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Creating...");
+    const date = new Date()
+    const postedDate = date.toLocaleDateString('en-BD',{year:'numeric',month:'long',day:'numeric'})
     const formData = new FormData();
     formData.append("image", data.image[0]);
     axiosPublic
@@ -79,8 +81,9 @@ export default function AddArticle() {
           tag: data?.tags.value,
           description: data?.description,
           isPremium: false,
-          state: "approved",
+          state: "pending",
           viewCount: 0,
+          postedDate
         };
         axiosPublic
           .post("articles", article)

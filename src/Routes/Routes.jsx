@@ -12,6 +12,7 @@ import Home from "../pages/Home/Home/Home";
 import Profile from "../pages/Profile/Profile";
 import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/AllUsers/Allusers";
+import Articles from "../pages/Dashboard/Articles/Articles";
 
 const router = createBrowserRouter([
   {
@@ -57,8 +58,12 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children:[
       {
-        path:'dashboard/allUsers',
+        path:'allUsers',
         element:<AllUsers />
+      },
+      {
+        path: 'articles',
+        element: <Articles />
       }
     ]
   }

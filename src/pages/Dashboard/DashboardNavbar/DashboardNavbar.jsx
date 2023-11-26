@@ -59,7 +59,7 @@ export default function DashboardNavbar() {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <Link to="dashboard/allUsers">
+          <Link to="/dashboard/allUsers">
             {" "}
             <ListItemText primary="All Users" />
           </Link>
@@ -75,7 +75,7 @@ export default function DashboardNavbar() {
           <ListItemIcon>
             <DescriptionIcon />
           </ListItemIcon>
-          <Link>
+          <Link to="/dashboard/articles">
             <ListItemText primary="All Articles" />
           </Link>
         </ListItemButton>
