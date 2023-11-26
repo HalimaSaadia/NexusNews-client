@@ -66,6 +66,7 @@ function EditArticle(props) {
     } = useForm();
 
     const onSubmit = (data) => {
+      console.log(data);
         const toastId = toast.loading("Creating...");
         const formData = new FormData();
         formData.append("image", data.image[0]);
@@ -83,7 +84,7 @@ function EditArticle(props) {
           )
           .then((res) => {
             const article = {
-              title: data.title,
+              title: data?.title,
               image: res?.data?.data?.display_url,
               publisher: data?.publisher.value,
               tag: data?.tags.value,
@@ -156,7 +157,7 @@ function EditArticle(props) {
                     label="title"
                     variant="standard"
                     fullWidth
-                    defaultValue={row.title}
+                    defaultValue={row?.title}
                     
                   />
                   {errors.title?.type === "required" && (
@@ -182,13 +183,13 @@ function EditArticle(props) {
                   control={control}
                   name="tags"
                   rules={{ required: true }}
-                  defaultValue={row.tag}
+                  defaultValue={row?.tag}
 
                   render={({ field }) => (
                     <Select
                       {...field}
                       className="tags"
-                      placeholder={row.tag}
+                      placeholder={row?.tag}
                       styles={selectStyle}
                       options={tagsOption}
                     />
@@ -199,7 +200,7 @@ function EditArticle(props) {
                   name="publisher"
                   control={control}
                   rules={{ required: true }}
-                  defaultValue={row.publisher}
+                  defaultValue={row?.publisher}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -220,7 +221,7 @@ function EditArticle(props) {
                     sx={{width: '100%'}}
                     multiline
                     rows={4}
-                    defaultValue={row.description}
+                    defaultValue={row?.description}
                   />
                   {errors.tags?.type === "required" && (
                     <Typography color="red">Description is require</Typography>

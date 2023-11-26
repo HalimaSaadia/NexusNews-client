@@ -9,6 +9,7 @@ import Details from "../pages/Details/Details";
 import MyArticles from "../pages/MyArticles/MyArticles";
 import EditArticle from "../pages/MyArticles/EditArticle";
 import Home from "../pages/Home/Home/Home";
+import Profile from "../pages/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -44,9 +45,9 @@ const router = createBrowserRouter([
           path:"/myArticles",
           element: <MyArticles />
         },{
-          path:'/edit',
-          element: <EditArticle />
-        }
+          path:"/profile",
+          element: <Profile />
+        } 
     ]
   },
   {

@@ -55,10 +55,11 @@ export default function MyArticles() {
       return result.data;
     },
   });
+
   if (!loading) {
     refetch();
   }
-  console.log(articles);
+
 
   return (
     <TableContainer
