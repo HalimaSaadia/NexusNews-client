@@ -20,7 +20,7 @@ export default function DashboardNavbar() {
   };
 
   return (
-    <Box sx={{ width: "100%", bgcolor: "transparent" }}>
+    <Box sx={{ width: "100%", bgcolor: "transparent",position:'sticky',top:0 }}>
       <List component="nav" aria-label="main mailbox folders">
         <ListItemButton>
           <ListItemIcon>

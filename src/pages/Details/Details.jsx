@@ -66,9 +66,10 @@ export default function Details() {
   };
 
   return (
-    <Box sx={{ maxWidth: "md", mx: "auto",mt:10 }}>
-      <Card>
+    <Box sx={{ maxWidth: "md", mx: "auto",mt:5 }}>
+      <Card  sx={{backgroundColor: article?.isPremium ? '#a9927d' :""}}>
         <CardHeader
+        sx={{bgcolor:"#a9927d"}}
           avatar={
             <Avatar  sx={{ bgcolor: '#c6ac8f' }} aria-label="recipe">
               <img  src={article?.authorImage} alt="" />
@@ -81,7 +82,7 @@ export default function Details() {
         <CardMedia
           component="img"
           height="194"
-          sx={{ maxHeight: 394,objectFit:"fill", }}
+          sx={{ maxHeight: 294,objectFit:"fill", }}
           image={article?.image}
           alt="Paella dish"
           

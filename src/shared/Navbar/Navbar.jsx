@@ -146,9 +146,9 @@ export default function Navbar() {
   //   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex",position:'sticky',top: 0 ,zIndex:50 }}>
       <CssBaseline />
-      <AppBar color="primary" position="sticky" sx={{ top: 0 }} component="nav">
+      <AppBar color="primary"  sx={{ position:'sticky',top: 0 }} component="nav">
         <Toolbar>
           <IconButton
             aria-label="open drawer"

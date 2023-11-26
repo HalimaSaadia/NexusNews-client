@@ -34,8 +34,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const ArticleRow = ({ row, idx, refetch }) => {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
- 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const handleDelete = () => {
   

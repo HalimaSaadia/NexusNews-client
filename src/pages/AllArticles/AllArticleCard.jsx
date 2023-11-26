@@ -14,19 +14,28 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 
+export default function AllArticleCard({ article }) {
+  const { author, authorImage, description, image, publisher, title, _id } =
+    article;
 
-export default function AllArticleCard({article}) {
-    const {author,authorImage,description,image,publisher,title,_id} = article
+   
 
   return (
-    <Card sx={{ maxWidth: {sm:'auto'}, display:'flex',flexDirection:'column' }}>
+    <Card
+      sx={{
+        maxWidth: { sm: "auto" },
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: article?.isPremium ? "#a9927d" : "",
+      }}
+    >
       <CardHeader
+        sx={{ bgcolor: "#a9927d" }}
         avatar={
-          <Avatar sx={{ bgcolor: '#a9927d' }} aria-label="recipe">
-           <img src={authorImage} alt="Author" />
+          <Avatar sx={{ bgcolor: "#a9927d" }} aria-label="recipe">
+            <img src={authorImage} alt="Author" />
           </Avatar>
         }
-       
         title={publisher}
         subheader={`Author: ${author}`}
       />
@@ -34,21 +43,23 @@ export default function AllArticleCard({article}) {
         component="img"
         height="194"
         image={image}
-        sx={{height:194}}
+        sx={{ height: 194 }}
         alt="Paella dish"
       />
-      <CardContent sx={{flexGrow:1}}>
-      <Typography gutterBottom variant="h5" component="div">
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
-        <Typography sx={{flexGrow:1}} variant="body2" color="text.secondary">
-        {description?.slice(0,200)}... ...
+        <Typography sx={{ flexGrow: 1 }} variant="body2" color="text.secondary">
+          {description?.slice(0, 200)}... ...
         </Typography>
       </CardContent>
       <Link to={`/details/${_id}`}>
-      <CardActions disableSpacing>
-       <Button fullWidth variant="contained" color="secondary">Details</Button>
-      </CardActions>
+        <CardActions disableSpacing>
+          <Button fullWidth variant="contained" color="secondary">
+            Details
+          </Button>
+        </CardActions>
       </Link>
     </Card>
   );
