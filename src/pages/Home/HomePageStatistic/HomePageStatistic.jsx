@@ -1,22 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { useContext } from "react";
-import { AuthContext } from "../../../provider/AuthProvider";
 import { Box, Container, Typography } from "@mui/material";
 import CountUp from "react-countup";
-import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import useUsersCount from "../../../Hooks/useUsersCount";
+import Loader from "../../../shared/Loader/Loader";
 
 const HomePageStatistic = () => {
-  const { user } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
-  const { isLoading: usersCountLoading, data: usersCount } = useQuery({
-    queryKey: ["usersCount"],
-    queryFn: async () => {
-      const result = await axiosPublic.get("/usersCount");
-      return result.data;
-    },
-  });
-  console.log(usersCount);
+
+  const {usersCountLoading,usersCount} = useUsersCount()
+  if(usersCountLoading){
+    return <Loader />
+  }
   return (
     <Container sx={{ display: "flex", justifyContent:"center",  background: "linear-gradient(rgba(0,0,0,0.7), rgba(0, 0, 0, 0.7)), url('https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4=') center/cover no-repeat", py:5,color:'white'}}>
     <Box>  <Box
