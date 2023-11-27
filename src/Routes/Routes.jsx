@@ -7,14 +7,13 @@ import AddArticle from "../pages/AddArticle/AddArticle";
 import AllArticles from "../pages/AllArticles/AllArticles";
 import Details from "../pages/Details/Details";
 import MyArticles from "../pages/MyArticles/MyArticles";
-import EditArticle from "../pages/MyArticles/EditArticle";
 import Home from "../pages/Home/Home/Home";
 import Profile from "../pages/Profile/Profile";
 import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/AllUsers/Allusers";
 import Articles from "../pages/Dashboard/Articles/Articles";
 import AddPublisher from "../pages/Dashboard/AddPublisher/AddPublisher";
-import ErrorPage from "../pages/Errorpage/ErrorPage";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 

@@ -54,8 +54,8 @@ export default function HomePageBanner() {
   });
   console.log(articles);
   return (
-    <Box>
-      <Slider style={{ minHeight: "450px" }} {...settings}>
+    <Box sx={{width:'100%',overflowX:'clip',pb:5,minHeight:  {md:"450px"},}}>
+      <Slider {...settings}>
         {articles?.map((article) => (
           <Box
             key={article?._id}
@@ -66,13 +66,15 @@ export default function HomePageBanner() {
               background: `linear-gradient(rgba(0,0,0,0.7), rgba(0, 0, 0, 0.7)), url(${article?.image}) center/cover no-repeat`,
             }}
           >
-            <Box sx={{width:{xs:'100%',md:`70%`}, paddingX:10, paddingY:5,display:'flex',flexDirection:'column'}}>
-              <Typography variant="h3" color="white">
+            <Box sx={{width:{xs:'100%',sm:'80%',md:`70%`}, paddingX:{xs:2,md:5,lg:10}, paddingY:5,display:'flex',flexDirection:'column'}}>
+             <Box>
+             <Typography fontSize={{xs:'30px',sm:'38px',md:'40px',lg:'48px'}} color="white">
                 {article?.title}
               </Typography>
-              <Typography  variant="h6" color="#c6ac8f" sx={{flexGrow:1,mb:5}}>
+              <Typography  sx={{flexGrow:1,mb:5,fontSize:{sm:'22px',md:'28px'}}} color="#c6ac8f" >
                 {article?.description.slice(0,100)}...
               </Typography>
+             </Box>
              <Link to={`/details/${article?._id}`} > <Button color="secondary"  variant="contained">View Details</Button></Link>
             </Box>
           </Box>
