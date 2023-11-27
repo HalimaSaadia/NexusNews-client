@@ -14,13 +14,15 @@ import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/AllUsers/Allusers";
 import Articles from "../pages/Dashboard/Articles/Articles";
 import AddPublisher from "../pages/Dashboard/AddPublisher/AddPublisher";
-import Errorpage from "../pages/Errorpage/ErrorPage";
+import ErrorPage from "../pages/Errorpage/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
-    errorElement: <Errorpage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path:'/',
@@ -41,15 +43,15 @@ const router = createBrowserRouter([
         },
         {
           path:"/details/:id",
-          element:<Details />
+          element:<PrivateRoute><Details /></PrivateRoute>
         },
         {
           path: "/addArticle",
-          element:<AddArticle />
+          element:<PrivateRoute><AddArticle /></PrivateRoute>
         },
         {
           path:"/myArticles",
-          element: <MyArticles />
+          element:<PrivateRoute> <MyArticles /></PrivateRoute>
         },{
           path:"/profile",
           element: <Profile />
@@ -58,7 +60,7 @@ const router = createBrowserRouter([
   },
   {
     path:"dashboard",
-    element: <Dashboard />,
+    element: <AdminRoute><Dashboard /></AdminRoute>,
     children:[
       {
         path:'allUsers',

@@ -27,6 +27,8 @@ export default function Navbar() {
   console.log(isAdmin, adminLoading);
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+
+
   const DrawerNavList = (
     <>
       <ListItem disablePadding>
@@ -66,7 +68,7 @@ export default function Navbar() {
           </ListItemButton>
         </ListItem>
       )}
-      {isPremiumTaken === "admin" && (
+      {isPremiumTaken && (
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/premium-articles">
