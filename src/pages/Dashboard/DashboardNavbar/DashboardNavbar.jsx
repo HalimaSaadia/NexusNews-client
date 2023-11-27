@@ -9,6 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import HomeIcon from "@mui/icons-material/Home";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from "react-router-dom";
 import "./dashboardNavbar.css";
 
@@ -32,6 +33,7 @@ export default function DashboardNavbar() {
           </Link>
         </ListItemButton>
         <Divider />
+
         <ListItemButton
           selected={selectedIndex === -1}
           onClick={(event) => handleListItemClick(event, -1)}
@@ -48,6 +50,24 @@ export default function DashboardNavbar() {
             <ListItemText primary="Home" />
           </Link>
         </ListItemButton>
+        <ListItemButton
+          selected={selectedIndex === -2}
+          onClick={(event) => handleListItemClick(event, -2)}
+          style={{
+            backgroundColor: selectedIndex === -1 ? "#c6ac8f" : "transparent",
+            color: selectedIndex !== -2 ? "#c6ac8f" : "black",
+          }}
+        >
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <Link to="/dashboard">
+            {" "}
+            <ListItemText primary="Dashboard" />
+          </Link>
+        </ListItemButton>
+   
+       
         <ListItemButton
           selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0)}
