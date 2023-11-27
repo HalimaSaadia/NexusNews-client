@@ -14,11 +14,13 @@ import Dashboard from "../layout/Dashboard";
 import AllUsers from "../pages/Dashboard/AllUsers/Allusers";
 import Articles from "../pages/Dashboard/Articles/Articles";
 import AddPublisher from "../pages/Dashboard/AddPublisher/AddPublisher";
+import Errorpage from "../pages/Errorpage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <Errorpage />,
     children: [
       {
         path:'/',
@@ -69,7 +71,8 @@ const router = createBrowserRouter([
      {
       path:'add-publisher',
       element:<AddPublisher />
-     }
+     },
+   
     ]
   }
 ]);

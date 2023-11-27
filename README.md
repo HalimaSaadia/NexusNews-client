@@ -10,4 +10,4 @@ under this this route there is three page all user, all articles, add publisher.
 
 - I have implement authentication by using firebase. For any crud operation user will be shown relevant messages. 
 
-- there is also error page. If user trying to hit invalid url he/she will be redirected to this page
+- there is also error page. If user trying to hit invalid url he/she will be redirected to this pages
