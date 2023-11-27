@@ -4,14 +4,15 @@ import { useContext } from "react";
 import { AuthContext } from "../../../provider/AuthProvider";
 import { Box, Container, Typography } from "@mui/material";
 import CountUp from "react-countup";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const HomePageStatistic = () => {
   const { user } = useContext(AuthContext);
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const { isLoading: usersCountLoading, data: usersCount } = useQuery({
     queryKey: ["usersCount"],
     queryFn: async () => {
-      const result = await axiosSecure.get("/usersCount");
+      const result = await axiosPublic.get("/usersCount");
       return result.data;
     },
   });
