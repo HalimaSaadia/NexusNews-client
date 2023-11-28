@@ -1,3 +1,6 @@
+My Website name is NexusNews
+Here is the liveSite link: https://nexusnewsbd.netlify.app
+
 Some features of my fullstack newspaper website
 - The Navbar of my Website have page__ home, add article, all article, dashboard(only for admin), premium articles(if user took subscription) my profile
 
