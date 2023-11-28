@@ -3,6 +3,7 @@ import ArticleCard from './ArticleCard';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { Box, Container } from '@mui/material';
+import Loader from '../../../shared/Loader/Loader';
 
 const Articles = () => {
     const axiosSecure = useAxiosSecure()
@@ -14,7 +15,9 @@ const Articles = () => {
         }
 
     })
-    console.log(articles);
+    if(articlesLoading){
+        return <Loader />
+    }
     return (
         <Box sx={{display:'flex',justifyContent:'center'}}>
             <Box>{articles?.map(article =>  <ArticleCard refetch={refetch} key={article._id} article={article} />)}</Box>

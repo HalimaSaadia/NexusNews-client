@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import Payment from "../pages/Dashboard/Payment/Payment";
 import AddArticle from "../pages/AddArticle/AddArticle";
 import AllArticles from "../pages/AllArticles/AllArticles";
 import Details from "../pages/Details/Details";
@@ -17,6 +16,9 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import DashboardHomePage from "../pages/Dashboard/DashboardHomePage/DashboardHomePage";
+import PremiumArticles from "../pages/PremiumArticles/PremiumArticles";
+import Subscription from "../pages/Subscription/Subscription";
+import Payment from "../pages/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -52,10 +54,24 @@ const router = createBrowserRouter([
         {
           path:"/myArticles",
           element:<PrivateRoute> <MyArticles /></PrivateRoute>
-        },{
-          path:"/profile",
-          element: <Profile />
-        } 
+        },
+        {
+          path:"/premiumArticles",
+          element:<PremiumArticles />
+        }
+        ,{
+          path:"/myProfile",
+          element: <PrivateRoute><Profile /></PrivateRoute>
+        },
+        {
+          path:"/subscription",
+          element:<Subscription />
+        },
+       {
+        path:"/payment/:id",
+        element:<Payment />
+       }
+        
     ]
   },
   {

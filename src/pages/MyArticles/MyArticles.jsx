@@ -14,6 +14,7 @@ import { Button, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArticleRow from "./ArticleRow";
+import Loader from "../../shared/Loader/Loader";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -42,7 +43,7 @@ export default function MyArticles() {
   const { user, loading } = useContext(AuthContext);
 
   const {
-    isPending,
+    isPending:articlesLoading,
     data: articles = [],
     refetch,
   } = useQuery({
@@ -60,10 +61,14 @@ export default function MyArticles() {
     refetch();
   }
 
+  if(articlesLoading){
+    return <Loader />
+  }
+
 
   return (
     <TableContainer
-      sx={{ maxWidth: "md", mx: "auto", mt: 5 }}
+      sx={{ maxWidth: "md", mx: "auto", my: 5 }}
       component={Paper}
     >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">

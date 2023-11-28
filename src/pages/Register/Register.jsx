@@ -5,7 +5,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { Box, Button, Card, ListItem, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, ListItem, Paper, TextField, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import CardMedia from "@mui/material/CardMedia";
 
@@ -82,38 +82,29 @@ function Register() {
   };
   return (
    <Box sx={{minHeight: '100vh', display:'flex',alignItems:'center', justifyContent:'center'}}>
-     <Card  sx={{ maxWidth: "900px",display: {xs:'block', md:'flex'} }}>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-     
-      <CardMedia
-        component="img"
-        sx={{height:"100%"}}
-        image="https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4="
-        alt="Live from space album cover"
-      />
-      </Box>
-      <Box>
-        <Typography variant="h4" textAlign="center">Sign Up</Typography>
+     <Paper elevation={3} sx={{width:500,p:5}}>
+     <Box>
+        <Typography variant="h4" fontWeight={700} textAlign="center">Sign Up</Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ display: "flex", flexDirection: "column"}}>
             <TextField
               {...register("name", { required: true })}
               label="Your Name"
-              sx={{ m: 1, width: "300px" }}
+              sx={{ m: 1 }}
               variant="standard"
             />
             <TextField
               {...register("email", { required: true })}
               label="Enter Email"
               type="email"
-              sx={{ m: 1, width: "300px" }}
+              sx={{ m: 1 }}
               variant="standard"
             />
             <TextField
               {...register("password", { required: true, pattern:/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{6,}$/i })}
               type="password"
               label="Create Password"
-              sx={{ m: 1, width: "300px" }}
+              sx={{ m: 1 }}
               variant="standard"
             />
             {errors.password?.type === 'pattern' && <Typography color="red">
@@ -125,15 +116,16 @@ function Register() {
             <TextField
               {...register("image", { required: true })}
               type="file"
-              sx={{ m: 1, width: "300px"}}
+              sx={{ m: 1}}
               
               variant="standard"
             />
-            <Button variant="contained" color="secondary" type="submit">Sign Up</Button>
+            <Button variant="contained" color="secondary" sx={{my:2}} type="submit">Sign Up</Button>
+            <Typography align="center">Already Have Account? <Link to="/login" style={{color:'blue'}}>Sign In</Link></Typography>
           </Box>
         </form>
       </Box>
-    </Card>
+     </Paper>
    </Box>
 
     

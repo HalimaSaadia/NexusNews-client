@@ -14,10 +14,10 @@ const DashboardHomePage = () => {
    <Container>
     <PublisherChart />
     <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={7}>
         <UsersChart />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
         <ArticlesChart />
         </Grid>
     </Grid>

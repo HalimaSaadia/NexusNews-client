@@ -66,7 +66,7 @@ export default function Details() {
   };
 
   return (
-    <Box sx={{ maxWidth: "md", mx: "auto",mt:5 }}>
+    <Box sx={{ maxWidth: "md", mx: "auto",my:5 }}>
       <Card  sx={{backgroundColor: article?.isPremium ? '#a9927d' :""}}>
         <CardHeader
         sx={{bgcolor:"#a9927d"}}

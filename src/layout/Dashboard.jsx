@@ -1,23 +1,24 @@
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import DashboardNavbar from "../pages/Dashboard/DashboardNavbar/DashboardNavbar";
 
 const Dashboard = () => {
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "repeat(12, auto)" }}>
-      <Box
+    <Grid container>
+      <Grid 
+      item 
+      md={3}
         sx={{
-          gridColumn: "span 2",
           minHeight: "100vh",
           backgroundColor: "secondary.main",
         }}
       >
         <DashboardNavbar />
-      </Box>
-      <Box sx={{ gridColumn: "span 10" }}>
+      </Grid>
+      <Grid item md={9}>
         <Outlet />
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   )
 };
 

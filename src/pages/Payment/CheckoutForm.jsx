@@ -1,15 +1,21 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../provider/AuthProvider";
+import toast from "react-hot-toast";
 
 
-const CheckoutForm = () => {
+const CheckoutForm = ({subscriptionPlan}) => {
     const stripe = useStripe();
     const elements = useElements();
+    const axiosSecure = useAxiosSecure()
+    const {user} = useContext(AuthContext)
     
 
     useEffect(()=>{
-        axios.post("http://localhost:5000/payment",{price: 400})
+        axios.post("https://nexus-news-server.vercel.app/payment",{price: subscriptionPlan})
         .then(res => {
             console.log(res.data);
         })
@@ -21,7 +27,7 @@ const CheckoutForm = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-
+        const toastId = toast.loading("Wait...")
         if(!stripe || !elements){
             return console.log("No stripe, no element");
         }
@@ -36,7 +42,26 @@ const CheckoutForm = () => {
         if(error){
             console.log('[error]',error);
         }else{
-            console.log("[paymentMethod]",paymentMethod);
+            console.log("[paymentMethod]",paymentMethod.created,"premiumTaken Time");
+            axiosSecure.patch(`/subscription/${subscriptionPlan}`,{user:user?.email})
+            .then(res=> {
+              Swal.fire({
+                icon:"success",
+                confirmButtonColor:"#5e503f",
+                title:"Thanks For Your Subscription",
+           
+              })
+              toast.remove(toastId)
+            }).catch(err=> {
+              Swal.fire({
+                icon:"error",
+                confirmButtonColor:"#5e503f",
+                title:error.message,
+                
+              })
+              toast.remove(toastId)
+            })
+
         }
     }
   

@@ -15,6 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
+import SectionHeading from "../../../shared/SectionHeading/SectionHeading";
 
 const bull = (
   <Box
@@ -27,7 +28,10 @@ const bull = (
 
 export default function Plans() {
   return (
-    <Container sx={{display:'flex', justifyContent:'center',py:5}}>
+    
+   <Container>
+    <SectionHeading title="OUR PLANS"/>
+     <Box sx={{display:'flex', justifyContent:'center',py:5}}>
       <Box sx={{ display:'grid', gridTemplateColumns: {sm:'repeat(2, auto)',md:'repeat(3, auto)'},gap:5 }}>
         <Card variant="outlined" sx={{ border: "2px solid #c6ac8f",maxWidth: 300 }}>
           <CardContent>
@@ -218,6 +222,7 @@ export default function Plans() {
           </CardActions>
         </Card>
       </Box>
-    </Container>
+    </Box>
+   </Container>
   );
 }

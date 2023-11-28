@@ -71,7 +71,7 @@ export default function Navbar() {
       {isPremiumTaken && (
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
-            <NavLink to="/premium-articles">
+            <NavLink to="/premiumArticles">
               <ListItemText primary="Premium Articles" />
             </NavLink>
           </ListItemButton>
@@ -128,7 +128,7 @@ export default function Navbar() {
         </NavLink>
       )}
       {isPremiumTaken && (
-        <NavLink to="/premium-articles">
+        <NavLink to="/premiumArticles">
           <Button sx={{ color: "white" }}>Premium Article</Button>
         </NavLink>
       )}

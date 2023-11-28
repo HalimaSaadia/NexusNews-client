@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Loader from "../../shared/Loader/Loader";
+
 
 const modalStyle = {
   content: {
@@ -26,9 +29,11 @@ const Profile = () => {
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
  
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const {logout} = useContext(AuthContext)
 
   const {
     isPending: profileLoading,
@@ -110,10 +115,35 @@ const Profile = () => {
           })
   };
 
+  const handleLogout =()=> {
+    const toastId = toast.loading("loading...")
+    logout()
+    .then(res => {
+      Swal.fire({
+        icon:"success",
+        title:"Successfully logout",
+        confirmButtonColor:"#5e503f",
+      })
+      toast.remove(toastId)
+      navigate("/login")
+    }).catch(error=> {
+      Swal.fire({
+        icon:"error",
+        title:error.message,
+        confirmButtonColor:"#5e503f",
+      })
+      toast.remove(toastId)
+      
+    })
+  }
+  if(profileLoading){
+    return <Loader />
+  }
+
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "90vh",
         width: "100%",
         display: "flex",
         justifyContent: "center",
@@ -128,11 +158,12 @@ const Profile = () => {
           "& > :not(style)": {
             m: 1,
             px: 5,
-            py: 8,
+            py: 2,
           },
+         
         }}
       >
-        <Paper elevation={3}>
+        <Paper elevation={3} sx={{ width:500}}>
           <Box>
             <Avatar
               alt="Remy Sharp"
@@ -155,6 +186,10 @@ const Profile = () => {
           <Box align="center" sx={{ py: 2 }}>
             <Button onClick={openModal} variant="contained" color="secondary">
               Edit Information
+            </Button>
+            <br />
+            <Button onClick={handleLogout} sx={{mt:3,fontWeight:600}} variant="contained" color="tertiary">
+              Logout
             </Button>
             <Box>
               <Modal

@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, CardMedia, Container, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import SectionHeading from "../../../shared/SectionHeading/SectionHeading";
 
 const Publisher = () => {
   const axiosPublic = useAxiosPublic();
@@ -13,12 +14,15 @@ const Publisher = () => {
   });
   console.log(allPublisher);
   return (
-    <Container
+   <Container>
+    <SectionHeading title="OUR PUBLISHERS" />
+     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         py: 5,
         color: "white",
+        my:3
       }}
     >
       <Box>
@@ -52,7 +56,8 @@ const Publisher = () => {
           ))}
         </Box>
       </Box>
-    </Container>
+    </Box>
+   </Container>
   );
 };
 

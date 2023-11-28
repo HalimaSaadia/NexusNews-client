@@ -13,6 +13,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import Loader from "../../../shared/Loader/Loader";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -66,6 +67,10 @@ export default function AllUsers() {
         })
         toast.remove(toastId)
     })
+  }
+
+  if(allUsersLoading){
+    return <Loader />
   }
   return (
     <Box

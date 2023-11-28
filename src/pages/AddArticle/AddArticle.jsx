@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Grid, Paper, TextField } from "@mui/material";
 
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
@@ -19,11 +19,11 @@ const selectStyle = {
     ...base,
     border: state.isFocused ? "none" : "none",
     outline: state.isFocused ? "none" : "none",
-    "&:focus": {
-      border: "none",
-      outline: "none",
-    },
+    boxShadow:0
+  
+   
   }),
+ 
 };
 
 export default function AddArticle() {
@@ -54,8 +54,12 @@ export default function AddArticle() {
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Creating...");
-    const date = new Date()
-    const postedDate = date.toLocaleDateString('en-BD',{year:'numeric',month:'long',day:'numeric'})
+    const date = new Date();
+    const postedDate = date.toLocaleDateString("en-BD", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
     const formData = new FormData();
     formData.append("image", data.image[0]);
     axiosPublic
@@ -83,7 +87,7 @@ export default function AddArticle() {
           isPremium: false,
           state: "pending",
           viewCount: 0,
-          postedDate
+          postedDate,
         };
         axiosPublic
           .post("articles", article)
@@ -125,111 +129,140 @@ export default function AddArticle() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        py: 5,
       }}
     >
-      <Card sx={{ maxWidth: 700 }}>
-        <CardContent>
-          <CardMedia
-            component="img"
-            image="https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4="
-            alt="green iguana"
-          />
+      <Paper elevation={3}>
+        <Card sx={{ maxWidth: 700 }}>
           <CardContent>
-            <Typography
-              gutterBottom
-              textAlign="center"
-              variant="h5"
-              component="div"
+            <Box
+              
+              sx={{
+                height: 200,
+                background:
+                  "linear-gradient(rgba(0,0,0,0.7), rgba(0, 0, 0, 0.7)), url('https://media.istockphoto.com/id/1428321006/photo/glass-globe-on-newspapers.webp?b=1&s=170667a&w=0&k=20&c=JdSxI50uNGqcxj5wAoi-rlxe_P89CHFXi8fGPJMTXj4=') center/cover no-repeat",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              Add Article
-            </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-                <Box sx={{ width: "48%" }}>
-                  <TextField
-                    {...register("title", { required: true })}
-                    type="text"
-                    label="title"
-                    variant="standard"
-                    fullWidth
-                    // sx={{ width: "48%" }}
-                  />
-                  {errors.title?.type === "required" && (
-                    <Typography color="red">Title is require</Typography>
-                  )}
-                </Box>
-
-                <Box sx={{ width: "40%" }}>
-                  <TextField
-                    label="Article Image"
-                    type="file"
-                    variant="standard"
-                    fullWidth
-                    {...register("image", { required: true })}
-                  />
-                  {errors.image?.type === "required" && (
-                    <Typography color="red">Image is require</Typography>
-                  )}
-                </Box>
-
-                <Controller
-                  control={control}
-                  name="tags"
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="tags"
-                      placeholder="select tag"
-                      styles={selectStyle}
-                      options={tagsOption}
+              <Typography
+                variant="h4"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                fontWeight={700}
+                color="white"
+              >
+                Add Article
+              </Typography>
+            </Box>
+            <CardContent>
+              <Typography
+                gutterBottom
+                textAlign="center"
+                variant="h5"
+                component="div"
+              >
+                Add Article
+              </Typography>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={2}>
+                  <Grid item md={6}>
+                    <TextField
+                      {...register("title", { required: true })}
+                      type="text"
+                      label="title"
+                      variant="standard"
+                      fullWidth
                     />
-                  )}
-                />
+                    {errors.title?.type === "required" && (
+                      <Typography color="red">Title is require</Typography>
+                    )}
+                  </Grid>
 
-                <Controller
-                  name="publisher"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      placeholder="select publisher"
-                      className="tags"
-                      styles={selectStyle}
-                      options={publisherOption}
+                  <Grid item md={6}>
+                    <TextField
+                      label="Article Image"
+                      type="file"
+                      variant="standard"
+                      fullWidth
+                      {...register("image", { required: true })}
                     />
-                  )}
-                />
+                    {errors.image?.type === "required" && (
+                      <Typography color="red">Image is require</Typography>
+                    )}
+                  </Grid>
+                  <Grid item md={6}>
+                    <Controller
+                      control={control}
+                      name="tags"
+                      rules={{ required: true }}
+                      style={{width:'100%'}}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="tags"
+                          placeholder="select tag"
+                          styles={selectStyle}
+                  
+                          options={tagsOption}
+                        />
+                      )}
+                    />
+                  </Grid>
 
-                <Box  sx={{width: '100%'}}>
-                  <TextField
-                    label="Description"
-                    type="text"
-                    {...register("description", { required: true })}
-                    variant="standard"
-                    sx={{width: '100%'}}
-                    multiline
-                    rows={4}
-                  />
-                  {errors.tags?.type === "required" && (
-                    <Typography color="red">Description is require</Typography>
-                  )}
-                </Box>
+                  <Grid item md={6}>
+                    <Controller
+                      name="publisher"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          placeholder="select publisher"
+                          className="tags"
+                          styles={selectStyle}
+                          options={publisherOption}
+                        />
+                      )}
+                    />
+                  </Grid>
 
-                <Button
-                  fullWidth
-                  color="secondary"
-                  variant="contained"
-                  type="submit"
-                >
-                  Add Article
-                </Button>
-              </Box>
-            </form>
+                  <Grid item md={12}>
+                    <TextField
+                      label="Description"
+                      type="text"
+                      {...register("description", { required: true })}
+                      variant="standard"
+                      fullWidth
+                      sx={{mb:3}}
+                      multiline
+                      rows={3}
+                    />
+                    {errors.tags?.type === "required" && (
+                      <Typography color="red">
+                        Description is require
+                      </Typography>
+                    )}
+                  </Grid>
+
+                  <Button
+                    fullWidth
+                    color="secondary"
+                    variant="contained"
+                    type="submit"
+                  >
+                    Add Article
+                  </Button>
+                </Grid>
+              </form>
+            </CardContent>
           </CardContent>
-        </CardContent>
-      </Card>
+        </Card>
+      </Paper>
     </Box>
   );
 }

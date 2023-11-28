@@ -11,14 +11,31 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Loader from "../../shared/Loader/Loader";
 
 
 export default function AllArticleCard({ article }) {
   const { author, authorImage, description, image, publisher, title, _id } =
     article;
+    const {user,loading} = useContext(AuthContext)
+    const axiosSecure = useAxiosSecure()
+    const navigate = useNavigate()
 
-   
+    const {isPending:loggedInUserPending, data:loggedInUser} = useQuery({
+      queryKey:["loggedInUser"],
+      enabled:!loading,
+      queryFn: async()=> {
+        const result = await axiosSecure.get(`/user/${user?.email}`)
+        return result.data
+      }
+    })
+    
+
 
   return (
     <Card
@@ -54,13 +71,13 @@ export default function AllArticleCard({ article }) {
           {description?.slice(0, 200)}... ...
         </Typography>
       </CardContent>
-      <Link to={`/details/${_id}`}>
+      {/* <Link to={`/details/${_id}`}> */}
         <CardActions disableSpacing>
-          <Button fullWidth variant="contained" color="secondary">
+          <Button onClick={() => navigate(`/details/${_id}`)} disabled={!loggedInUser?.isPremiumTaken && article?.isPremium ? true: false} fullWidth variant="contained" color="secondary">
             Details
           </Button>
         </CardActions>
-      </Link>
+      {/* </Link> */}
     </Card>
   );
 }
