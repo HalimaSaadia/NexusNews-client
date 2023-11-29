@@ -17,18 +17,30 @@ import { NavLink } from "react-router-dom";
 import useUserState from "../../Hooks/useIsAdmin";
 import "./navbar.css";
 import { AuthContext } from "../../provider/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Avatar } from "@mui/material";
+import Loader from "../Loader/Loader";
 
 const drawerWidth = 240;
 const navItems = ["home", "about", "contact"];
 
 export default function Navbar() {
   const { isAdmin, adminLoading, isPremiumTaken } = useUserState();
-  const { user } = React.useContext(AuthContext);
-  console.log(isAdmin, adminLoading);
+  const { user,loading } = React.useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-
-
+  const { isPending: userPending, data: userFromDb,refetch } = useQuery({
+    queryKey: ["userFromDb"],
+    enabled:!loading,
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/user/${user?.email}`);
+      return result.data;
+    },
+  });
+if(userPending && loading){
+  return <Loader />
+}
   const DrawerNavList = (
     <>
       <ListItem disablePadding>
@@ -38,13 +50,13 @@ export default function Navbar() {
           </NavLink>
         </ListItemButton>
       </ListItem>
-      <ListItem disablePadding>
+     { user &&<ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
           <NavLink to="/addArticle">
             <ListItemText primary="Add Article" />
           </NavLink>
         </ListItemButton>
-      </ListItem>
+      </ListItem>}
       <ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
           <NavLink to="/articles">
@@ -52,14 +64,14 @@ export default function Navbar() {
           </NavLink>
         </ListItemButton>
       </ListItem>
-      <ListItem disablePadding>
+    { user && <ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
           <NavLink to="/subscription">
             <ListItemText primary="Subscription" />
           </NavLink>
         </ListItemButton>
-      </ListItem>
-      {isAdmin === "admin" && (
+      </ListItem>}
+      {isAdmin === "admin" && user && (
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/dashboard">
@@ -68,7 +80,7 @@ export default function Navbar() {
           </ListItemButton>
         </ListItem>
       )}
-      {isPremiumTaken && (
+      {isPremiumTaken && user &&(
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/premiumArticles">
@@ -88,7 +100,8 @@ export default function Navbar() {
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/myProfile">
-              <ListItemText primary="Profile" />
+          
+              <ListItemText  primary="Profile" />
             </NavLink>
           </ListItemButton>
         </ListItem>
@@ -96,7 +109,7 @@ export default function Navbar() {
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/login">
-              <ListItemText primary="Profile" />
+              <ListItemText primary="Login" />
             </NavLink>
           </ListItemButton>
         </ListItem>
@@ -110,36 +123,42 @@ export default function Navbar() {
         <Button sx={{ color: "white" }}>Home</Button>
       </NavLink>
 
-      <NavLink to="/addArticle">
+      {user && <NavLink to="/addArticle">
         <Button sx={{ color: "white" }}>Add Article</Button>
-      </NavLink>
+      </NavLink>}
 
       <NavLink to="/articles">
         <Button sx={{ color: "white" }}>All Articles</Button>
       </NavLink>
 
-      <NavLink to="/subscription">
+     { user &&<NavLink to="/subscription">
         <Button sx={{ color: "white" }}>Subscription</Button>
-      </NavLink>
+      </NavLink>}
 
-      {isAdmin === "admin" && (
+      {isAdmin === "admin" && user &&(
         <NavLink to="/dashboard">
           <Button sx={{ color: "white" }}>Dashboard</Button>
         </NavLink>
       )}
-      {isPremiumTaken && (
+      {isPremiumTaken && user &&(
         <NavLink to="/premiumArticles">
           <Button sx={{ color: "white" }}>Premium Article</Button>
         </NavLink>
       )}
 
-      <NavLink to="/myArticles">
+     { user &&<NavLink to="/myArticles">
         <Button sx={{ color: "white" }}>My Articles</Button>
-      </NavLink>
+      </NavLink>}
 
       {user ? (
         <NavLink to="/myProfile">
-          <Button sx={{ color: "white" }}>My Profile</Button>
+          <Button sx={{ color: "white" }}>
+            <Avatar
+              alt="Remy Sharp"
+              src={userFromDb?.userImage}
+              sx={{ width: 36, height: 36 }}
+            />
+          </Button>
         </NavLink>
       ) : (
         <NavLink to="/login">
@@ -163,8 +182,6 @@ export default function Navbar() {
       <List>{DrawerNavList}</List>
     </Box>
   );
-
-  //   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex", position: "sticky", top: 0, zIndex: 50 }}>

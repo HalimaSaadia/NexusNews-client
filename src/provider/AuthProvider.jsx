@@ -82,7 +82,7 @@ console.log(location);
     });
 
     return () => unSubscribe();
-  }, []);
+  }, [user,axiosSecure]);
 
   useEffect(() => {
     setTimeout(() => {

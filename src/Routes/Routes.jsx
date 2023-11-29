@@ -57,7 +57,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/premiumArticles",
-          element:<PremiumArticles />
+          element:<PrivateRoute><PremiumArticles /></PrivateRoute>
         }
         ,{
           path:"/myProfile",
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
         },
         {
           path:"/subscription",
-          element:<Subscription />
+          element:<PrivateRoute><Subscription /></PrivateRoute>
         },
        {
         path:"/payment/:id",

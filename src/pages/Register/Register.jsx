@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
@@ -15,6 +15,7 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 function Register() {
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -22,10 +23,9 @@ function Register() {
     formState: { errors },
   } = useForm();
 
+
   const onSubmit = async (data) => {
     const toastId = toast.loading("creating....");
-
-    // const image =
     try {
       const result = await axios.post(
         `https://api.imgbb.com/1/upload?key=${
@@ -56,10 +56,10 @@ function Register() {
           Swal.fire({
             icon: "success",
             confirmButtonColor:"#5e503f",
-            title: "User Created",
+            title: "Successfully Sign up",
           });
-       
           toast.remove(toastId);
+          navigate("/")
         })
         .catch((err) => {
           Swal.fire({
@@ -101,7 +101,7 @@ function Register() {
               variant="standard"
             />
             <TextField
-              {...register("password", { required: true, pattern:/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{6,}$/i })}
+              {...register("password", { required: true, pattern:/(?=.*[A-Z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])/ })}
               type="password"
               label="Create Password"
               sx={{ m: 1 }}

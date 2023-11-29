@@ -10,7 +10,7 @@ const AllArticles = () => {
   const axiosPublic = useAxiosPublic();
   const [searchedValue, setSearchedValue] = useState("");
   const {
-    isPending:allArticlesLoading,
+    isPending: allArticlesLoading,
     data: articles = [],
     refetch,
   } = useQuery({
@@ -27,8 +27,8 @@ const AllArticles = () => {
     setSearchedValue(e.target.value);
     refetch();
   };
-  if(allArticlesLoading){
-    return <Loader />
+  if (allArticlesLoading) {
+    return <Loader />;
   }
 
   return (
@@ -44,21 +44,11 @@ const AllArticles = () => {
         />
       </Box>
 
-
-        <Box  sx={{
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "auto",
-            sm: "auto auto",
-            lg: "auto auto auto",
-          },
-          gap: 5,
-        }}>
-          {articles.map((article) => (
-            <AllArticleCard key={article._id} article={article} />
-          ))}
-        </Box>
-
+      <Grid container columnSpacing={2}>
+        {articles.map((article) => (
+          <AllArticleCard key={article._id} article={article} />
+        ))}
+      </Grid>
     </Container>
   );
 };

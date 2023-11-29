@@ -13,6 +13,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import usePublisher from "../../Hooks/usePublisher";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const selectStyle = {
   control: (base, state) => ({
@@ -28,6 +29,7 @@ const selectStyle = {
 
 export default function AddArticle() {
   const axiosPublic = useAxiosPublic();
+  const axisSecure = useAxiosSecure()
   const publishers = usePublisher();
 
   const { user } = useContext(AuthContext);
@@ -89,8 +91,8 @@ export default function AddArticle() {
           viewCount: 0,
           postedDate,
         };
-        axiosPublic
-          .post("articles", article)
+        axisSecure
+          .post("/articles", article)
           .then((res) => {
             if (res.data.insertedId) {
               Swal.fire({

@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
@@ -38,12 +38,16 @@ export default function AllArticleCard({ article }) {
 
 
   return (
-    <Card
+    <Grid
+    item
+    md={4}
       sx={{
         maxWidth: { sm: "auto" },
         display: "flex",
         flexDirection: "column",
+        my:1,
         backgroundColor: article?.isPremium ? "#a9927d" : "",
+       
       }}
     >
       <CardHeader
@@ -52,6 +56,12 @@ export default function AllArticleCard({ article }) {
           <Avatar sx={{ bgcolor: "#a9927d" }} aria-label="recipe">
             <img src={authorImage} alt="Author" />
           </Avatar>
+          
+        }
+        action={
+          <IconButton aria-label="settings">
+            <Typography sx={{bgcolor:"primary.main",px:1,color:'white',borderRadius:2}} variant="h6">{article?.isPremium && "PREMIUM"}</Typography>
+          </IconButton>
         }
         title={publisher}
         subheader={`Author: ${author}`}
@@ -71,13 +81,13 @@ export default function AllArticleCard({ article }) {
           {description?.slice(0, 200)}... ...
         </Typography>
       </CardContent>
-      {/* <Link to={`/details/${_id}`}> */}
+  
         <CardActions disableSpacing>
           <Button onClick={() => navigate(`/details/${_id}`)} disabled={!loggedInUser?.isPremiumTaken && article?.isPremium ? true: false} fullWidth variant="contained" color="secondary">
             Details
           </Button>
         </CardActions>
-      {/* </Link> */}
-    </Card>
+
+    </Grid>
   );
 }

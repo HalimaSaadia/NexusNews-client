@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
@@ -27,6 +27,8 @@ function Login() {
   } = useForm();
   const { loginWithEmailAndPassword, loginWithGoogle } =
     useContext(AuthContext);
+    const location = useLocation()
+    const navigate = useNavigate()
 
   const onSubmit = (data) => {
     const toastId = toast.loading("wait...");
@@ -39,6 +41,7 @@ function Login() {
           title: "successfully Logged In",
         });
         toast.remove(toastId);
+        navigate(location?.state ? location.state : "/")
       })
       .catch((error) => {
         Swal.fire({
@@ -70,6 +73,7 @@ function Login() {
           title: "successfully Logged In",
         });
         toast.remove(toastId);
+        navigate(location?.state ? location.state : "/")
       })
       .catch((error) => {
         Swal.fire({

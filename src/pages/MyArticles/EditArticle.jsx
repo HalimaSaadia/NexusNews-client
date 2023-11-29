@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Select from "react-select";
@@ -9,16 +9,18 @@ import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../provider/AuthProvider';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import CloseIcon from '@mui/icons-material/Close';
 
 const modalStyle = {
   content: {
-    top: '50%',
+    top: '55%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width:'80%'
+    width:'80%',
+    marginTop:'10px'
   },
 };
 
@@ -31,6 +33,7 @@ const selectStyle = {
         border: "none",
         outline: "none",
       },
+      boxShadow:0
     }),
   };
 
@@ -92,7 +95,7 @@ function EditArticle(props) {
             };
             console.log(article,res)
             axiosSecure
-              .patch(`edit-article/${row._id}`, article)
+              .patch(`/edit-article/${row._id}`, article)
               .then((res) => {
                 console.log(res.data);
                 if (res.data.modifiedCount) {
@@ -136,8 +139,7 @@ function EditArticle(props) {
       };
 
   return (
-    <Box >
-
+    <Box>
       <Modal
         isOpen={modalIsOpen}
         onAfterOpen={afterOpenModal}
@@ -146,11 +148,11 @@ function EditArticle(props) {
         contentLabel="Example Modal"
       >
 
-        <button onClick={closeModal}>x</button>
+        <button onClick={closeModal}><CloseIcon sx={{cursor:'pointer', fontSize:28,mb:5}} /></button>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
-                <Box sx={{ width: "48%" }}>
+              <Grid container spacing={5}>
+                <Grid item md={6} >
                   <TextField
                     {...register("title", { required: true })}
                     type="text"
@@ -163,9 +165,9 @@ function EditArticle(props) {
                   {errors.title?.type === "required" && (
                     <Typography color="red">Title is require</Typography>
                   )}
-                </Box>
+                </Grid>
 
-                <Box sx={{ width: "40%" }}>
+                <Grid item md={6}>
                   <TextField
                     label="Article Image"
                     type="file"
@@ -177,9 +179,10 @@ function EditArticle(props) {
                   {errors.image?.type === "required" && (
                     <Typography color="red">Image is require</Typography>
                   )}
-                </Box>
+                </Grid>
 
-                <Controller
+               <Grid item md={6}>
+               <Controller
                   control={control}
                   name="tags"
                   rules={{ required: true }}
@@ -195,8 +198,9 @@ function EditArticle(props) {
                     />
                   )}
                 />
-
-                <Controller
+               </Grid>
+               <Grid item md={6}>
+               <Controller
                   name="publisher"
                   control={control}
                   rules={{ required: true }}
@@ -211,24 +215,28 @@ function EditArticle(props) {
                     />
                   )}
                 />
+               </Grid>
 
-                <Box  sx={{width: '100%'}}>
+               
+
+                <Grid  item md={12}>
                   <TextField
                     label="Description"
                     type="text"
                     {...register("description", { required: true })}
                     variant="standard"
-                    sx={{width: '100%'}}
                     multiline
+                    fullWidth
                     rows={4}
                     defaultValue={row?.description}
                   />
                   {errors.tags?.type === "required" && (
                     <Typography color="red">Description is require</Typography>
                   )}
-                </Box>
+                </Grid>
 
-                <Button
+               <Grid item xs={12}>
+               <Button
                   fullWidth
                   color="secondary"
                   variant="contained"
@@ -236,7 +244,8 @@ function EditArticle(props) {
                 >
                   Update Article
                 </Button>
-              </Box>
+               </Grid>
+              </Grid>
             </form>
       </Modal>
     </Box>
