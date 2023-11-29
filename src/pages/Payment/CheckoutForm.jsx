@@ -40,7 +40,7 @@ const CheckoutForm = ({ subscriptionPlan }) => {
 
   useEffect(() => {
     axios
-      .post("https://nexus-news-server.vercel.app/payment", {
+      .post("http://localhost:5000/payment", {
         price: subscriptionPlan,
       })
       .then((res) => {

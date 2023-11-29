@@ -10,10 +10,12 @@ import Paper from "@mui/material/Paper";
 import { Avatar, Box, Button, Container } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Loader from "../../../shared/Loader/Loader";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -35,54 +37,62 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-
-
-
 export default function AllUsers() {
   const axiosSecure = useAxiosSecure();
-  const { isPending: allUsersLoading, data: allUsers,refetch } = useQuery({
+  const [page, setPage] = React.useState(1);
+  const {
+    isPending: allUsersLoading,
+    data: allUsers,
+    refetch,
+  } = useQuery({
+    queryKey:["allUsers",page],
     queryFn: async () => {
-      const result = await axiosSecure.get("/all-users");
+      const result = await axiosSecure.get(`/all-users?page=${page}`);
       return result.data;
     },
   });
-  
-  const handleMakeAdmin =(id,userName)=> {
-    const toastId = toast.loading("Updating...")
-    axiosSecure.patch(`/make-user-admin/${id}`)
-    .then(res => {
-        refetch()
-        Swal.fire({
-            icon:'success',
-            title:`${userName} is Admin Now`,
-            confirmButtonColor:"#5e503f",
-        })
-        toast.remove(toastId)
-    }).catch(error => {
-        Swal.fire({
-            icon:'error',
-            title: error.message,
-            confirmButtonColor:"#5e503f",
-        })
-        toast.remove(toastId)
-    })
+  const { data: allUserCount, isPending: allUserCountPending } = useQuery({
+    queryKey: ["allUserCount"],
+    queryFn: async () => {
+      const result = await axiosSecure.get("/allUsersCount");
+      return result.data.allUsersCount;
+    },
+  });
+  if (allUserCountPending) {
+    return;
   }
+  const totalPage = [...Array(Math.ceil(allUserCount / 5)).keys()];
 
-  if(allUsersLoading){
-    return <Loader />
+  const handleMakeAdmin = (id, userName) => {
+    const toastId = toast.loading("Updating...");
+    axiosSecure
+      .patch(`/make-user-admin/${id}`)
+      .then((res) => {
+        refetch();
+        Swal.fire({
+          icon: "success",
+          title: `${userName} is Admin Now`,
+          confirmButtonColor: "#5e503f",
+        });
+        toast.remove(toastId);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: error.message,
+          confirmButtonColor: "#5e503f",
+        });
+        toast.remove(toastId);
+      });
+  };
+
+  if (allUsersLoading) {
+    return <Loader />;
   }
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        minHeight: "100vh",
-      }}
-    >
-      <TableContainer sx={{ width: "80%" }} component={Paper}>
+    <Container sx={{ mt: 5 }}>
+     <Box sx={{minHeight:"80vh"}}>
+     <TableContainer  component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -101,18 +111,26 @@ export default function AllUsers() {
                   {idx + 1}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  <Avatar sx={{ bgcolor: 'green[500]' }} variant="rounded">
-                   <img src={user?.userImage} alt="" />
+                  <Avatar sx={{ bgcolor: "green[500]" }} variant="rounded">
+                    <img src={user?.userImage} alt="" />
                   </Avatar>
                 </StyledTableCell>
                 <StyledTableCell align="">{user?.userName}</StyledTableCell>
                 <StyledTableCell align="">{user?.userEmail}</StyledTableCell>
                 <StyledTableCell align="right">
                   {user?.role === "admin" ? (
-                   <> Admin <AdminPanelSettingsIcon color="secondary"/></>
+                    <>
+                      {" "}
+                      Admin <AdminPanelSettingsIcon color="secondary" />
+                    </>
                   ) : (
-                    <Button onClick={() => handleMakeAdmin(user?._id, user?.userName)} color="secondary" disabled={user?.role === 'admin' ? true : false} variant="contained">
-                      Make Admin 
+                    <Button
+                      onClick={() => handleMakeAdmin(user?._id, user?.userName)}
+                      color="secondary"
+                      disabled={user?.role === "admin" ? true : false}
+                      variant="contained"
+                    >
+                      Make Admin
                     </Button>
                   )}
                 </StyledTableCell>
@@ -121,6 +139,18 @@ export default function AllUsers() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
+     </Box>
+      <Box my={2}>
+        <Tabs>
+          <TabList>
+            {totalPage.map((page) => (
+              <Tab onClick={() => setPage(page + 1)} key={page}>
+                {page}
+              </Tab>
+            ))}
+          </TabList>
+        </Tabs>
+      </Box>
+    </Container>
   );
 }
