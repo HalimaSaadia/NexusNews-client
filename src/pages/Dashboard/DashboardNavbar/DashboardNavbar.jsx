@@ -9,7 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import DescriptionIcon from "@mui/icons-material/Description";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import HomeIcon from "@mui/icons-material/Home";
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link } from "react-router-dom";
 import "./dashboardNavbar.css";
 
@@ -21,99 +21,99 @@ export default function DashboardNavbar() {
   };
 
   return (
-    <Box sx={{ width: "100%", bgcolor: "transparent",position:'sticky',top:0 }}>
+    <Box
+      sx={{ width: "100%", bgcolor: "transparent", position: "sticky", top: 0 }}
+    >
       <List component="nav" aria-label="main mailbox folders">
-        <ListItemButton>
-          <ListItemIcon>
-            <HomeIcon color="secondary" />
-          </ListItemIcon>
-          <Link to="/">
-            {" "}
-      
-          </Link>
-        </ListItemButton>
-        <Divider />
+        <Link to="/">
+          {" "}
+          <ListItemButton>
+            <ListItemIcon>
+              <HomeIcon color="secondary" />
+            </ListItemIcon>
+          </ListItemButton>
+        </Link>
 
-        <ListItemButton
-          selected={selectedIndex === -1}
-          onClick={(event) => handleListItemClick(event, -1)}
-          style={{
-            backgroundColor: selectedIndex === -1 ? "#c6ac8f" : "transparent",
-            color: selectedIndex !== -1 ? "#c6ac8f" : "black",
-          }}
-        >
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <Link to="/">
-            {" "}
+        <Divider />
+        <Link to="/">
+          <ListItemButton
+            selected={selectedIndex === -1}
+            onClick={(event) => handleListItemClick(event, -1)}
+            style={{
+              backgroundColor: selectedIndex === -1 ? "#c6ac8f" : "transparent",
+              color: selectedIndex !== -1 ? "#c6ac8f" : "black",
+            }}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>{" "}
             <ListItemText primary="Home" />
-          </Link>
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === -2}
-          onClick={(event) => handleListItemClick(event, -2)}
-          style={{
-            backgroundColor: selectedIndex === -1 ? "#c6ac8f" : "transparent",
-            color: selectedIndex !== -2 ? "#c6ac8f" : "black",
-          }}
-        >
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <Link to="/dashboard">
-            {" "}
+          </ListItemButton>
+        </Link>
+        <Link to="/dashboard">
+          <ListItemButton
+            selected={selectedIndex === -2}
+            onClick={(event) => handleListItemClick(event, -2)}
+            style={{
+              backgroundColor: selectedIndex === -2 ? "#c6ac8f" : "transparent",
+              color: selectedIndex !== -2 ? "#c6ac8f" : "black",
+            }}
+          >
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>{" "}
             <ListItemText primary="Dashboard" />
-          </Link>
-        </ListItemButton>
-   
-       
-        <ListItemButton
-          selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0)}
-          style={{
-            backgroundColor: selectedIndex === 0 ? "#c6ac8f" : "transparent",
-            color: selectedIndex !== 0 ? "#c6ac8f" : "black",
-          }}
-        >
-          <ListItemIcon>
-            <GroupIcon />
-          </ListItemIcon>
-          <Link to="/dashboard/allUsers">
-            {" "}
+          </ListItemButton>
+        </Link>
+
+        <Link to="/dashboard/allUsers">
+          <ListItemButton
+            selected={selectedIndex === 0}
+            onClick={(event) => handleListItemClick(event, 0)}
+            style={{
+              backgroundColor: selectedIndex === 0 ? "#c6ac8f" : "transparent",
+              color: selectedIndex !== 0 ? "#c6ac8f" : "black",
+            }}
+          >
+            <ListItemIcon>
+              <GroupIcon />
+            </ListItemIcon>{" "}
             <ListItemText primary="All Users" />
-          </Link>
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 1}
-          onClick={(event) => handleListItemClick(event, 1)}
-          style={{
-            backgroundColor: selectedIndex === 1 ? "#c6ac8f" : "transparent",
-            color: selectedIndex !== 1 ? "#c6ac8f" : "black",
-          }}
-        >
-          <ListItemIcon>
-            <DescriptionIcon />
-          </ListItemIcon>
-          <Link to="/dashboard/articles">
+          </ListItemButton>
+        </Link>
+
+        <Link to="/dashboard/articles">
+          <ListItemButton
+            selected={selectedIndex === 1}
+            onClick={(event) => handleListItemClick(event, 1)}
+            style={{
+              backgroundColor: selectedIndex === 1 ? "#c6ac8f" : "transparent",
+              color: selectedIndex !== 1 ? "#c6ac8f" : "black",
+            }}
+          >
+            <ListItemIcon>
+              <DescriptionIcon />
+            </ListItemIcon>
+
             <ListItemText primary="All Articles" />
-          </Link>
-        </ListItemButton>
-        <ListItemButton
-          selected={selectedIndex === 2}
-          onClick={(event) => handleListItemClick(event, 2)}
-          style={{
-            backgroundColor: selectedIndex === 2 ? "#c6ac8f" : "transparent",
-            color: selectedIndex !== 2 ? "#c6ac8f" : "black",
-          }}
-        >
-          <ListItemIcon>
-            <AutoStoriesIcon />
-          </ListItemIcon>
-          <Link to="/dashboard/add-publisher">
+          </ListItemButton>
+        </Link>
+
+        <Link to="/dashboard/add-publisher">
+          <ListItemButton
+            selected={selectedIndex === 2}
+            onClick={(event) => handleListItemClick(event, 2)}
+            style={{
+              backgroundColor: selectedIndex === 2 ? "#c6ac8f" : "transparent",
+              color: selectedIndex !== 2 ? "#c6ac8f" : "black",
+            }}
+          >
+            <ListItemIcon>
+              <AutoStoriesIcon />
+            </ListItemIcon>
             <ListItemText primary="Add publisher" />
-          </Link>
-        </ListItemButton>
+          </ListItemButton>
+        </Link>
       </List>
     </Box>
   );
