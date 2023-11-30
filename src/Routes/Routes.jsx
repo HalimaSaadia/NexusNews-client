@@ -19,6 +19,7 @@ import DashboardHomePage from "../pages/Dashboard/DashboardHomePage/DashboardHom
 import PremiumArticles from "../pages/PremiumArticles/PremiumArticles";
 import Subscription from "../pages/Subscription/Subscription";
 import Payment from "../pages/Payment/Payment";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
        {
         path:"/payment/:id",
         element:<Payment />
+       },
+       {
+        path:"/aboutUs",
+        element:<AboutUs />
        }
         
     ]

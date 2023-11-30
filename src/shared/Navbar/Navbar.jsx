@@ -50,6 +50,13 @@ if(userPending && loading){
           </NavLink>
         </ListItemButton>
       </ListItem>
+      <ListItem disablePadding>
+        <ListItemButton sx={{ textAlign: "center" }}>
+          <NavLink to="/aboutUs">
+            <ListItemText primary="About Us" />
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
      { user &&<ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
           <NavLink to="/addArticle">
@@ -121,6 +128,9 @@ if(userPending && loading){
     <>
       <NavLink to="/">
         <Button sx={{ color: "white" }}>Home</Button>
+      </NavLink>
+      <NavLink to="/aboutUs">
+        <Button sx={{ color: "white" }}>About Us</Button>
       </NavLink>
 
       {user && <NavLink to="/addArticle">
