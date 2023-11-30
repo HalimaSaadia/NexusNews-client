@@ -7,20 +7,24 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 import { Box, Button, CardActionArea, Paper } from "@mui/material";
 import useUserState from "../../Hooks/useIsAdmin";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({ subscriptionPlan }) => {
+const CheckoutForm = ({ subscriptionPlan,payment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
   const {premiumTakenRefetch} = useUserState()
+  const [clientSecret,setClientSecret] = useState("")
+  const navigate = useNavigate()
+
 
   const option = {
     style: {
@@ -39,26 +43,34 @@ const CheckoutForm = ({ subscriptionPlan }) => {
   };
 
   useEffect(() => {
+ 
+  console.log(subscriptionPlan);
     axios
       .post("https://nexus-news-server.vercel.app/payment", {
-        price: subscriptionPlan,
+        price: payment,
       })
       .then((res) => {
         console.log(res.data);
+        setClientSecret(res.data.clientSecret)
       })
       .catch((err) => {
         console.log(err);
       });
+    
   }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const toastId = toast.loading("Wait...");
     if (!stripe || !elements) {
+      toast.remove(toastId);
       return console.log("No stripe, no element");
+      
     }
     const card = elements.getElement(CardNumberElement);
     if (card === null) {
+      toast.remove(toastId);
       return;
     }
     const { error, paymentMethod } = await stripe.createPaymentMethod({
@@ -77,8 +89,29 @@ const CheckoutForm = ({ subscriptionPlan }) => {
         "[paymentMethod]",
         paymentMethod.created,
         "premiumTaken Time"
+        
       );
-      axiosSecure
+
+      const {paymentIntent,error} = await stripe.confirmCardPayment(clientSecret,{
+        payment_method:{
+          card:card,
+          billing_details:{
+            name:user?.displayName || "anonymous",
+            email:user?.email || "anonymous",
+          }
+        }
+      })
+      if(error){
+        Swal.fire({
+          icon: "error",
+          confirmButtonColor: "#5e503f",
+          title: error.message,
+        });
+        toast.remove(toastId)
+      }
+      else{
+       if(paymentIntent.status === 'succeeded'){
+        axiosSecure
         .patch(`/subscription/${subscriptionPlan}`, { user: user?.email })
         .then((res) => {
           Swal.fire({
@@ -86,6 +119,7 @@ const CheckoutForm = ({ subscriptionPlan }) => {
             confirmButtonColor: "#5e503f",
             title: "Thanks For Your Subscription",
           });
+          navigate("/")
           toast.remove(toastId);
         })
         .catch((err) => {
@@ -96,6 +130,10 @@ const CheckoutForm = ({ subscriptionPlan }) => {
           });
           toast.remove(toastId);
         });
+       }
+       
+      }
+      
     }
   };
 
@@ -142,7 +180,7 @@ const CheckoutForm = ({ subscriptionPlan }) => {
         >
           Pay {subscriptionPlan === "1" && "$2"}
           {subscriptionPlan === "2" && "$14.99"}
-          {subscriptionPlan === "2" && "$16.99"}
+          {subscriptionPlan === "3" && "$16.99"}
         </Button>
       </form>
     </Paper>

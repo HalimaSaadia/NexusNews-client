@@ -46,6 +46,8 @@ export default function AllArticleCard({ article }) {
         display: "flex",
         flexDirection: "column",
         my:1,
+        border:"5px solid white",
+        boxSizing:"border-box",
         backgroundColor: article?.isPremium ? "#a9927d" : "",
        
       }}

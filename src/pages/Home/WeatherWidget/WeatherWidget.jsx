@@ -14,7 +14,7 @@ const WeatherWidget = () => {
           "linear-gradient(rgba(0,0,0,0.2), rgba(0, 0, 0, 0.2)), url('https://images.pexels.com/photos/259620/pexels-photo-259620.jpeg?auto=compress&cs=tinysrgb&w=600') center/cover no-repeat",py:5,my:5,
       }}
     >
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Box
             sx={{

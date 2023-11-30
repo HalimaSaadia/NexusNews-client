@@ -50,7 +50,7 @@ const AllArticles = () => {
        </form>
       </Box>
 
-      <Grid container columnSpacing={2}>
+      <Grid container  >
         { !allArticlesLoading ? articles.map((article) => (
           <AllArticleCard key={article._id} article={article} />
         )): <Loader />}
