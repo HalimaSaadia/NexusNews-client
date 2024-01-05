@@ -12,14 +12,11 @@ const Publisher = () => {
       return result.data
     },
   });
-  console.log(allPublisher);
   return (
-   <Container>
+   <Box sx={{my:10}}>
     <SectionHeading title="OUR PUBLISHERS" />
      <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
         py: 5,
         color: "white",
         my:3
@@ -29,24 +26,21 @@ const Publisher = () => {
         {" "}
         <Box
           sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              sm: "repeat(2, auto)",
-              md: "repeat(3, auto)",
-              lg: "repeat(4, auto)",
-            },
-            gap: 10,
+            display: "flex",
+            flexWrap:"wrap",
+            justifyContent:"space-around"
+  
           }}
         >
           {allPublisher?.map((publisher) => (
-            <Card key={publisher?._id} sx={{ width: 225 }}>
+            <Card key={publisher?._id} sx={{ width: 225,boxShadow:0 }}>
               <CardMedia
-                sx={{ height: 140 }}
+                sx={{ height: 140,width:140,borderRadius:"50%",border:"10px solid #5E503F",margin:"auto" }}
                 image={publisher?.publisherImage}
                 title="green iguana"
               />
-              <CardContent sx={{bgcolor:'secondary.main', color:'white'}}>
-                <Typography sx={{fontWeight:700}} gutterBottom variant="h5" component="div">
+              <CardContent sx={{bgcolor:'', color:'black'}}>
+                <Typography sx={{fontWeight:700,textAlign:"center"}} gutterBottom variant="h5" component="div">
                  {publisher?.publisherName}
                 </Typography>
         
@@ -57,7 +51,7 @@ const Publisher = () => {
         </Box>
       </Box>
     </Box>
-   </Container>
+   </Box>
   );
 };
 

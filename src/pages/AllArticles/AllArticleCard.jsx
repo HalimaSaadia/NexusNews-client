@@ -38,22 +38,23 @@ export default function AllArticleCard({ article }) {
 
 
   return (
-    <Grid
+    <Card
     item
+    
     md={4}
       sx={{
         maxWidth: { sm: "auto" },
         display: "flex",
         flexDirection: "column",
         my:1,
-        border:"5px solid white",
+    
         boxSizing:"border-box",
-        backgroundColor: article?.isPremium ? "#a9927d" : "",
+       
        
       }}
     >
       <CardHeader
-        sx={{ bgcolor: "#a9927d" }}
+        sx={{ bgcolor: "#a9927d",py:1 }}
         avatar={
           <Avatar sx={{ bgcolor: "#a9927d" }} aria-label="recipe">
             <img src={authorImage} alt="Author" />
@@ -62,7 +63,7 @@ export default function AllArticleCard({ article }) {
         }
         action={
           <IconButton aria-label="settings">
-            <Typography sx={{bgcolor:"primary.main",px:1,color:'white',borderRadius:2}} variant="h6">{article?.isPremium && "PREMIUM"}</Typography>
+            <Typography sx={{bgcolor:"primary.main",px:1,color:'white',borderRadius:1}} >{article?.isPremium && "PREMIUM"}</Typography>
           </IconButton>
         }
         title={publisher}
@@ -70,17 +71,17 @@ export default function AllArticleCard({ article }) {
       />
       <CardMedia
         component="img"
-        height="194"
+        height="180"
         image={image}
-        sx={{ height: 194 }}
+        sx={{ height: 164 }}
         alt="Paella dish"
       />
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
+        <Typography gutterBottom sx={{wordBreak:"break-all"}} variant="h5" component="div">
+          {title.slice(0,50)}...
         </Typography>
-        <Typography sx={{ flexGrow: 1 }} variant="body2" color="text.secondary">
-          {description?.slice(0, 200)}... ...
+        <Typography sx={{ flexGrow: 1, textAlign:"justify" }} variant="body2" color="text.secondary">
+          {description?.slice(0, 40)}... ...
         </Typography>
       </CardContent>
   
@@ -90,6 +91,6 @@ export default function AllArticleCard({ article }) {
           </Button>
         </CardActions>
 
-    </Grid>
+    </Card>
   );
 }

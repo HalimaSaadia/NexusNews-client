@@ -20,25 +20,23 @@ const selectStyle = {
     ...base,
     border: state.isFocused ? "none" : "none",
     outline: state.isFocused ? "none" : "none",
-    boxShadow:0
-  
-   
+    boxShadow:0  
   }),
  
 };
-
+const tagsOption = [
+  { value: "politics", label: "Politics" },
+  { value: "business", label: "business" },
+  { value: "entertainment", label: "Entertainment" },
+  { value: "sports", label: "Sports" },
+];
 export default function AddArticle() {
   const axiosPublic = useAxiosPublic();
   const axisSecure = useAxiosSecure()
   const publishers = usePublisher();
 
-  const { user } = useContext(AuthContext);
-  const tagsOption = [
-    { value: "politics", label: "Politics" },
-    { value: "business", label: "business" },
-    { value: "entertainment", label: "Entertainment" },
-    { value: "sports", label: "Sports" },
-  ];
+  const { user } = useContext(AuthContext)
+  
   const publisherOption = publishers?.map((publisher) => {
     const option = {
       value: publisher?.publisherName,
@@ -132,6 +130,7 @@ export default function AddArticle() {
         justifyContent: "center",
         alignItems: "center",
         py: 5,
+        px:2
       }}
     >
       <Paper elevation={3}>
@@ -162,47 +161,42 @@ export default function AddArticle() {
               </Typography>
             </Box>
             <CardContent>
-              <Typography
-                gutterBottom
-                textAlign="center"
-                variant="h5"
-                component="div"
-              >
-                Add Article
-              </Typography>
+            
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={2}>
-                  <Grid item md={6}>
+                <Grid container columnSpacing={2}>
+                  <Grid item xs={12}  sm={6}>
                     <TextField
                       {...register("title", { required: true })}
                       type="text"
                       label="title"
                       variant="standard"
                       fullWidth
+             
                     />
                     {errors.title?.type === "required" && (
                       <Typography color="red">Title is require</Typography>
                     )}
                   </Grid>
 
-                  <Grid item md={6}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       label="Article Image"
                       type="file"
                       variant="standard"
-                      fullWidth
+                
                       {...register("image", { required: true })}
                     />
                     {errors.image?.type === "required" && (
                       <Typography color="red">Image is require</Typography>
                     )}
                   </Grid>
-                  <Grid item md={6}>
+                  
+                  <Grid item  xs={12} sm={6}>
                     <Controller
                       control={control}
                       name="tags"
                       rules={{ required: true }}
-                      style={{width:'100%'}}
+               
                       render={({ field }) => (
                         <Select
                           {...field}
@@ -216,7 +210,7 @@ export default function AddArticle() {
                     />
                   </Grid>
 
-                  <Grid item md={6}>
+                  <Grid item  xs={12} sm={6}>
                     <Controller
                       name="publisher"
                       control={control}
@@ -233,14 +227,14 @@ export default function AddArticle() {
                     />
                   </Grid>
 
-                  <Grid item md={12}>
+                  <Grid item  xs={12}>
                     <TextField
                       label="Description"
                       type="text"
                       {...register("description", { required: true })}
                       variant="standard"
                       fullWidth
-                      sx={{mb:3}}
+                
                       multiline
                       rows={3}
                     />
@@ -251,14 +245,17 @@ export default function AddArticle() {
                     )}
                   </Grid>
 
+                  <Grid item xs={12}>
                   <Button
                     fullWidth
                     color="secondary"
                     variant="contained"
+                    sx={{mt:5}}
                     type="submit"
                   >
                     Add Article
                   </Button>
+                  </Grid>
                 </Grid>
               </form>
             </CardContent>

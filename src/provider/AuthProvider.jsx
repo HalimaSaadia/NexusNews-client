@@ -14,6 +14,7 @@ import axios from "axios";
 import useAxiosPublic from "../Hooks/useAxiosPublic";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import { useLocation } from "react-router-dom";
+import useUserState from "../Hooks/useIsAdmin";
 
 export const AuthContext = createContext();
 const googleProvider = new GoogleAuthProvider();
@@ -25,7 +26,6 @@ const AuthProvider = ({ children }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
   const location = window.location.pathname
-console.log(location);
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -94,7 +94,7 @@ console.log(location);
       }
     }, 1000);
   }, [count]);
-  console.log(user);
+
 
   const value = {
     createUser,
@@ -108,6 +108,7 @@ console.log(location);
     afterOpenModal,
     closeModal,
     modalIsOpen,
+    
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

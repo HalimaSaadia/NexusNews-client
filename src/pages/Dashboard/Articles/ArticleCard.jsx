@@ -114,6 +114,8 @@ export default function ArticleCard({ article, refetch }) {
           title: "Article id Deleted",
           confirmButtonColor: "#5e503f",
         });
+        toast.remove(toastId)
+        refetch();
       })
       .catch((err) => {
         Swal.fire({

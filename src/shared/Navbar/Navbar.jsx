@@ -21,26 +21,31 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Avatar } from "@mui/material";
 import Loader from "../Loader/Loader";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 const drawerWidth = 240;
 const navItems = ["home", "about", "contact"];
 
 export default function Navbar() {
   const { isAdmin, adminLoading, isPremiumTaken } = useUserState();
-  const { user,loading } = React.useContext(AuthContext);
+  const { user, loading } = React.useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { isPending: userPending, data: userFromDb,refetch } = useQuery({
+  const {
+    isPending: userPending,
+    data: userFromDb,
+    refetch,
+  } = useQuery({
     queryKey: ["userFromDb"],
-    enabled:!loading,
+    enabled: !loading,
     queryFn: async () => {
       const result = await axiosSecure.get(`/user/${user?.email}`);
       return result.data;
     },
   });
-if(userPending && loading){
-  return <Loader />
-}
+  if (userPending && loading) {
+    return <Loader />;
+  }
   const DrawerNavList = (
     <>
       <ListItem disablePadding>
@@ -57,13 +62,15 @@ if(userPending && loading){
           </NavLink>
         </ListItemButton>
       </ListItem>
-     { user &&<ListItem disablePadding>
-        <ListItemButton sx={{ textAlign: "center" }}>
-          <NavLink to="/addArticle">
-            <ListItemText primary="Add Article" />
-          </NavLink>
-        </ListItemButton>
-      </ListItem>}
+      {user && (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/addArticle">
+              <ListItemText primary="Add Article" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      )}
       <ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
           <NavLink to="/articles">
@@ -71,13 +78,15 @@ if(userPending && loading){
           </NavLink>
         </ListItemButton>
       </ListItem>
-    { user && <ListItem disablePadding>
-        <ListItemButton sx={{ textAlign: "center" }}>
-          <NavLink to="/subscription">
-            <ListItemText primary="Subscription" />
-          </NavLink>
-        </ListItemButton>
-      </ListItem>}
+      {user && (
+        <ListItem disablePadding>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <NavLink to="/subscription">
+              <ListItemText primary="Subscription" />
+            </NavLink>
+          </ListItemButton>
+        </ListItem>
+      )}
       {isAdmin === "admin" && user && (
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
@@ -87,7 +96,7 @@ if(userPending && loading){
           </ListItemButton>
         </ListItem>
       )}
-      {isPremiumTaken && user &&(
+      {isPremiumTaken && user && (
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/premiumArticles">
@@ -107,8 +116,7 @@ if(userPending && loading){
         <ListItem disablePadding>
           <ListItemButton sx={{ textAlign: "center" }}>
             <NavLink to="/myProfile">
-          
-              <ListItemText  primary="Profile" />
+              <ListItemText primary="Profile" />
             </NavLink>
           </ListItemButton>
         </ListItem>
@@ -133,32 +141,38 @@ if(userPending && loading){
         <Button sx={{ color: "white" }}>About Us</Button>
       </NavLink>
 
-      {user && <NavLink to="/addArticle">
-        <Button sx={{ color: "white" }}>Add Article</Button>
-      </NavLink>}
+      {user && (
+        <NavLink to="/addArticle">
+          <Button sx={{ color: "white" }}>Add Article</Button>
+        </NavLink>
+      )}
 
       <NavLink to="/articles">
         <Button sx={{ color: "white" }}>All Articles</Button>
       </NavLink>
 
-     { user &&<NavLink to="/subscription">
-        <Button sx={{ color: "white" }}>Subscription</Button>
-      </NavLink>}
+      {user && (
+        <NavLink to="/subscription">
+          <Button sx={{ color: "white" }}>Subscription</Button>
+        </NavLink>
+      )}
 
-      {isAdmin === "admin" && user &&(
+      {isAdmin === "admin" && user && (
         <NavLink to="/dashboard">
           <Button sx={{ color: "white" }}>Dashboard</Button>
         </NavLink>
       )}
-      {isPremiumTaken && user &&(
+      {isPremiumTaken && user && (
         <NavLink to="/premiumArticles">
           <Button sx={{ color: "white" }}>Premium Article</Button>
         </NavLink>
       )}
 
-     { user &&<NavLink to="/myArticles">
-        <Button sx={{ color: "white" }}>My Articles</Button>
-      </NavLink>}
+      {user && (
+        <NavLink to="/myArticles">
+          <Button sx={{ color: "white" }}>My Articles</Button>
+        </NavLink>
+      )}
 
       {user ? (
         <NavLink to="/myProfile">
@@ -185,7 +199,20 @@ if(userPending && loading){
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography color="primary" variant="h6" sx={{ my: 2 }}>
+      <Typography
+        color="primary"
+        variant="h6"
+        sx={{ my: 2, display: "flex", alignItems: "center" }}
+      >
+        <AutoStoriesIcon
+          sx={{
+            fontSize: "40px",
+            color: "black",
+            transform: "rotate(-15deg)",
+            marginRight: "20px",
+            ml: 2,
+          }}
+        />
         Nexus News
       </Typography>
       <Divider />
@@ -194,11 +221,11 @@ if(userPending && loading){
   );
 
   return (
-    <Box sx={{ display: "flex", position: "sticky", top: 0, zIndex: 50 }}>
+    <Box sx={{ display: "flex", position: "sticky", top: 0, zIndex: 50, }}>
       <CssBaseline />
       <AppBar
         color="primary"
-        sx={{ position: "sticky", top: 0 }}
+        sx={{ position: "sticky", top: 0,py:1 }}
         component="nav"
       >
         <Toolbar>
@@ -216,6 +243,15 @@ if(userPending && loading){
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", lg: "block" } }}
           >
+            <AutoStoriesIcon
+              sx={{
+                fontSize: "40px",
+                color: "white",
+                transform: "rotate(-15deg)",
+                marginRight: "20px",
+                ml: 2,
+              }}
+            />
             Nexus News
           </Typography>
           <Box sx={{ display: { xs: "none", lg: "block" } }}>{NavList}</Box>

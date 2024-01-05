@@ -49,7 +49,7 @@ const ArticleRow = ({ row, idx, refetch }) => {
     setIsOpen(false);
   }
 
-  const handleDelete = () => {
+  const handleDelete = (id) => {
   
     Swal.fire({
       title: "Are you sure?",
@@ -63,7 +63,7 @@ const ArticleRow = ({ row, idx, refetch }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         const toastId = toast.loading("Please wait...")
-        axiosSecure.delete(`/delete-article/${row._id}}`)
+        axiosSecure.delete(`/delete-article/${id}`)
         .then((res) => {
           console.log(res.data);
           if(res.data.deletedCount){

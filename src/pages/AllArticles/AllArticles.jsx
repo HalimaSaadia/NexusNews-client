@@ -50,11 +50,11 @@ const AllArticles = () => {
        </form>
       </Box>
 
-      <Grid container  >
+      <Box sx={{display:"grid",gridTemplateColumns:"repeat(3, auto)"}} gap={2} >
         { !allArticlesLoading ? articles.map((article) => (
           <AllArticleCard key={article._id} article={article} />
         )): <Loader />}
-      </Grid>
+      </Box>
     </Container>
   );
 };
