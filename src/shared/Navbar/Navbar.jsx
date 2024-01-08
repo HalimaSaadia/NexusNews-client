@@ -241,7 +241,7 @@ export default function Navbar() {
             variant="h6"
             color="white"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", lg: "block" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", lg: "flex",alignItems:"center" } }}
           >
             <AutoStoriesIcon
               sx={{

@@ -12,12 +12,12 @@ export default function MediaControlCard() {
   const theme = useTheme();
 
   return (
-    <Box>
+    <Box sx={{px:2}}>
       <SectionHeading title="Media Insights" />
-      <Card sx={{ display:{md:"flex"},my:10 }}>
-      <Box sx={{ flexDirection: "column", width:{md: "60%"} }}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h4" >
+      <Box sx={{ display:{lg:"flex"}, mt:5}}>
+      <Box sx={{ flexDirection: "column", width:{lg: "60%"} }}>
+        <CardContent sx={{ flex: "1 0 auto" , px:0}}>
+          <Typography component="div" variant="h5" letterSpacing={1} fontWeight={400} >
             Unveiling Stories Through Media
           </Typography>
          
@@ -26,6 +26,7 @@ export default function MediaControlCard() {
             variant="subtitle1"
             color="text.secondary"
             component="div"
+            fontWeight={200}
           >
             Dive into the vibrant world of multimedia storytelling with our
             'Visual Chronicles' section. Immerse yourself in a captivating blend
@@ -39,13 +40,13 @@ export default function MediaControlCard() {
       </Box>
       <CardMedia
         component="video"
-        sx={{ width:{md:"40%" }}}
+        sx={{ width:{lg:"40%" }}}
         src={video}
         title="Live from space album cover"
         controls
         allow="autoPlay"
       />
-    </Card>
+    </Box>
     </Box>
   );
 }

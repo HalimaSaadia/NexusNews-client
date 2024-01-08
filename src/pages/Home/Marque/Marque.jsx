@@ -8,7 +8,8 @@ const Marque = () => {
         bgcolor: "secondary.main",
         color: "white",
         py: 1,
-        fontSize: "22px",
+        fontSize: "18px",
+        letterSpacing:1
       }}
     >
       <Marquee>

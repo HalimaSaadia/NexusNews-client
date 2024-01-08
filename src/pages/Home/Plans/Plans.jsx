@@ -28,7 +28,7 @@ const bull = (
 
 export default function Plans() {
   return (
-    <Container>
+    <Box>
       <SectionHeading title="OUR PLANS" />
       <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
         <Box
@@ -279,6 +279,6 @@ export default function Plans() {
           </Card>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

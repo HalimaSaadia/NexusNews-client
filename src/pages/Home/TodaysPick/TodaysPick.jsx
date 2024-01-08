@@ -7,7 +7,7 @@ import SectionHeading from "../../../shared/SectionHeading/SectionHeading";
 const TodaysPick = () => {
   const [value, onChange] = useState(new Date());
   return (
-    <Box>
+    <Box sx={{my:15,px:2}}>
         <SectionHeading title="Today's Pick" />
       <Box sx={{ display: { md: "flex" }, py: 5 }}>
         <Box sx={{ width: { md: "50%", position: "relative" } }}>
@@ -22,7 +22,7 @@ const TodaysPick = () => {
         </Box>
         <Box sx={{ flexDirection: "column", width: { md: "50%" } }}>
           <CardContent sx={{ flex: "1 0 auto", ml: { md: 5 } }}>
-            <Typography component="div" variant="h4">
+            <Typography component="div" variant="h5">
               PrimeTime Choice
             </Typography>
 
